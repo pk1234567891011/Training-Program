@@ -1,44 +1,45 @@
 <?php
 
 if(isset($_POST['submit']))
- {
+  {
     $user=$_POST['category'];
     if(empty($user))
     {
         $msg="Please enter category";
     }
-    else if (!preg_match("/^[a-zA-Z]*$/",$user)) {
+    else if (!preg_match("/^[a-zA-Z]*$/",$user)) 
+    {
         $msg="Category name must be in alphabets";
     }
-    else {
+    else 
+    {
         
-        $cname=$_POST['category'];
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-        $dbname = "Category";
+      $cname=$_POST['category'];
+      $servername = "localhost";
+      $username = "root";
+      $password = "root";
+      $dbname = "Category";
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      if ($conn->connect_error) 
+        {
+          die("Connection failed: " . $conn->connect_error);
+        }
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
-            if ($conn->connect_error) 
-            {
-             die("Connection failed: " . $conn->connect_error);
-             }
+        $sql = "INSERT INTO categories (C_name)
+        VALUES ('$cname')";
+        if ($conn->query($sql) === TRUE)
+        {
+          echo "";
+        }      
+        else
+        {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
 
-$sql = "INSERT INTO categories (cname)
-VALUES ('$cname')";
-             if ($conn->query($sql) === TRUE)
-              {
-                echo "";
-               }      
-                 else
-                  {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-                    }
-
-                $conn->close();
-                $c_msg="Everything is fine";
-     }
- }
+        $conn->close();
+        $c_msg="Category added successfully";
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -179,3 +180,9 @@ http://t.co/hGCgHEU6If       2 week ago
   </div>
 </body>
 </html>
+<!-- https://www.youtube.com/watch?v=3xRMUDC74Cw 
+style="background-color: #ace600; height: 49px;
+width: 102px;
+margin-left: 648px;
+margin-top: 9px;
+border-radius: 5px; color: white" -->
