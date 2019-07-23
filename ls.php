@@ -121,10 +121,7 @@ $(document).ready(function(){
         </tr>
       </thead>
       <tbody>
-        <?php
-        include_once 'dbConfig.php';
-        $query=$db->query("SELECT * FROM categories ORDER BY ID DESC");
-        ?>
+        
        <?php 
        $sql = "SELECT COUNT(*) AS cntrows FROM categories";
             $result = mysqli_query($con,$sql);
@@ -139,15 +136,15 @@ $(document).ready(function(){
               $name = $fetch['C_name']; 
                 ?>
                 <tr>
-                   <td align="center"><input type="checkbox" name="checked_id[]" class="checkbox" value="<?php echo $row["ID"]; ?>"/></td>
+                   <td align="center"><input type="checkbox" name="checked_id[]" class="checkbox" value="<?php echo $fetch["ID"]; ?>"/></td>
                    <td><?php echo $name;?></td>
                    <td>
             <div class="square">
-              <a href="edit.php?ID = <?php echo $fetch["ID"];?>" ><img src="images/edit_icon.png" style="margin-left: -4px;
+              <a href="edit.php?ID=<?php echo $fetch["ID"];?>" ><img src="images/edit_icon.png" style="margin-left: -4px;
                 padding-top: 11px;"></a>
             </div>
             <div class="squares">
-              <a href="delete.php?ID= <?php echo $fetch["ID"];?>" ><img src="images/delete_icon.png" style="margin-left: -2px;
+              <a href="delete.php?ID=<?php echo $fetch["ID"];?>" ><img src="images/delete_icon.png" style="margin-left: -2px;
                 padding-top: 13px;"></a>
             </div> 
           </td>
