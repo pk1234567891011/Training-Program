@@ -8,7 +8,8 @@ body
 {
 	width:100%;
 	float: left;
-	position: sticky;
+	
+
 }
 
 
@@ -580,7 +581,7 @@ body
 	position: absolute;
 	margin-left: 606px;
     margin-top: 205px;
-	color: red;
+	color: blue;
 }
 #p_fail
 {
@@ -588,4 +589,80 @@ body
 	color: red;
 	margin-left: 379px;
 	margin-top: 58px;
+}
+table, th, td 
+{
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-top: 50px;
+  position: relative;
+}
+th, td 
+{
+  padding: 15px;
+  text-align: center;
+}
+#third_form
+{
+	width: 79%;
+	height: 400px;
+	top: 220px;
+	position: absolute;
+	margin-left: 103px;
+	margin-top: 92px;
+}
+#Create_link
+{
+	background-color: #ace600;
+	height: 49px;
+	width: 189px;
+	margin-left: 457px;
+	margin-top: -4px;
+	border-radius: 5px;
+	color: white;
+	position: absolute;
+}
+#form
+{
+	height: 67px;
+	position: fixed;
+	width: 100%;
+	margin-top: 20px;
+}
+#del
+{
+	margin-left: 648px;
+	margin-top: -223px;
+}
+#btn_del
+{
+	background-color: #ace600; height: 49px;
+	width: 102px;
+	border-radius: 5px;
+	color: white;
+	margin-left: 0px;
+	position: absolute;
+	top: -5px;
+}
+.square
+{
+	height: 42px;
+	width: 32px;
+	background-color: orange;
+	margin-left: 78px;
+	position: absolute;
+	margin-top: -21px;
+}
+.button
+{
+	background-color: gray;
+}
+.squares
+{
+	height: 42px;
+	width: 32px;
+	background-color: green;
+	margin-left: 117px;
+	position: absolute;
+	margin-top: -21px;
 }
