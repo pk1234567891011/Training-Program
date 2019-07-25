@@ -3,31 +3,22 @@ include_once "action.php";
 ?>
 <?php
 
-            include("config.php");
+            include("dbConfig.php");
 
-            $rowperpage = 2;
-            $row = 0;
-
-            // Previous Button
-            if(isset($_POST['but_prev'])){
-                $row = $_POST['row'];
-                $row -= $rowperpage;
-                if( $row < 0 ){
-                    $row = 0;
-                }
+            if(isset($_GET['page']))
+            {
+              $page=$_GET['page'];
             }
-
-            // Next Button
-            if(isset($_POST['but_next'])){
-                $row = $_POST['row'];
-                $allcount = $_POST['allcount'];
-
-                $val = $row + $rowperpage;
-                if( $val < $allcount ){
-                    $row = $val;
-                }
+            else
+            {
+              $page=1;
             }
+            $num_per_page=2;
+            $start_from=($page-1)*2;
+            $query="select * from categories limit $start_from,$num_per_page";
+            $result=mysqli_query($db,$query);
  ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,22 +113,16 @@ $(document).ready(function(){
       </thead>
       <tbody>
         
-       <?php 
-       $sql = "SELECT COUNT(*) AS cntrows FROM categories";
-            $result = mysqli_query($con,$sql);
-            $fetchresult = mysqli_fetch_array($result);
-            $allcount = $fetchresult['cntrows'];
-
-            // selecting rows
-            $sql = "SELECT * FROM categories  ORDER BY ID ASC limit $row,".$rowperpage;
-            $result = mysqli_query($con,$sql);
-            $sno = $row + 1;
-            while($fetch = mysqli_fetch_array($result)){
-              $name = $fetch['C_name']; 
+       <tr>
+                   <?php 
+              while ($fetch=mysqli_fetch_assoc($result)) {
+                # code...
+              
+       
                 ?>
-                <tr>
+                
                    <td align="center"><input type="checkbox" name="checked_id[]" class="checkbox" value="<?php echo $fetch["ID"]; ?>"/></td>
-                   <td><?php echo $name;?></td>
+                   <td><?php echo $fetch['C_name'];?></td>
                    <td>
             <div class="square">
               <a href="edit.php?ID=<?php echo $fetch["ID"];?>" ><img src="images/edit_icon.png" style="margin-left: -4px;
@@ -152,23 +137,38 @@ $(document).ready(function(){
         </tr>
   
             <?php
-                $sno ++;
+                
             }
             ?>
       </tbody>
 
     </table>
-   <!-- <input type="submit" name="bulk_delete_submit" value="DELETE">-->
-     <span id="del"><input type="submit" name="bulk_delete_submit" value="DELETE" id="btn_del"> </span>
+    <br>
+   <?php
+   $pr_query="select * from categories";
+   $pr_result=mysqli_query($db,$pr_query);
+   $total_record=mysqli_num_rows($pr_result);
+   $total_page=ceil($total_record/$num_per_page);
+   if($page>1){
+    echo"<a href='ls.php?page=".($page-1)."'class='pagination'> first </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+
+   }
+   for($i=1;$i<$total_page; $i++)
+   {
+    echo"<a href='ls.php?page=".$i."'class='pagination'> $i </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+   
+   }
+   if($i==$total_page)
+   {
+    echo"<a href='ls.php?page=".($total_page)."'class='pagination'> Last </a>&nbsp;&nbsp;";
+    
+   }
+   ?>
+   <div id="del_btn">
+   <input type="submit" name="bulk_delete_submit" value="DELETE" id="btn_del">
+  </div>
   </form>
-  <form method="post" action="">
-            <div id="div_pagination">
-                <input type="hidden" name="row" value="<?php echo $row; ?>">
-                <input type="hidden" name="allcount" value="<?php echo $allcount; ?>">
-                <input type="submit" class="button" name="but_prev" value="Previous">
-                <input type="submit" class="button" name="but_next" value="Next">
-            </div>
-        </form>
+  
 </div>
   <div id="fourth" > 
     <img id="img_next" src="images/review_arrow.png" id="img2">
