@@ -666,3 +666,26 @@ th, td
 	position: absolute;
 	margin-top: -21px;
 }
+.pagination
+{
+	
+	text-decoration: none;
+	color: #ffffff;
+	position: absolute;
+	/*top: 567px;*/
+	border: 5px solid #575757;
+	background-color: #5C5C5C;
+	border-radius: 3px;
+	font-family: 'roboto_slabregular';
+	font-size: 14px;
+}
+#btn_del
+{
+	background-color: #ace600; height: 49px;
+	width: 102px;
+	border-radius: 5px;
+	color: white;
+	margin-left: 650px;
+	position: absolute;
+	top: -5px;
+}
