@@ -1,6 +1,6 @@
 @extends('product.master')
 @section('content')
- <form action="{{url('product', [$product->id])}}" method="POST">
+ <form action="{{url('product', [$product->id])}}" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="PUT">
         
  	{{csrf_field()}}
@@ -32,11 +32,13 @@
 	<div class="col-xs-12">
 		<div class="form-group">
 			 <label for="image">Upload Image:</label>
-           <!-- @if ("/images/{{ $product->image }}") -->
-              <img src="{{ URL::to('/') }}/images/{{ $product->image }}" style="height: 70px;width: 70px" />    <!-- @else -->
-            <!-- <p>No image found</p> -->
-    <!-- 
-    	@endif -->
+			@if("{{ $product->image }}")
+                      <img src="{{ $product->image }}" width="200px" height="100px">
+                  @else
+                      <p>no image</p>
+                @endif
+			
+           
          <input type="file" name="image" value="{{ $product->image }}" style="padding: 0px 5px"/>
          <input type="hidden" name="hidden_image" value="{{ $product->image }}" />
 		</div>
