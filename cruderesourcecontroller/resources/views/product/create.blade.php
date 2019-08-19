@@ -1,6 +1,6 @@
 @extends('product.master')
 @section('content')
- <form method="post" action="{{url('product')}}">
+ <form method="post" action="{{url('product')}}" enctype="multipart/form-data">
  	{{csrf_field()}}
  	@if(count($errors)>0)
 <div class="alert alert-danger">
