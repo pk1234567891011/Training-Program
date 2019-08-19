@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Post;
 use DB;
+use File;
+use Illuminate\Support\Facades\Input;
 class ProductController extends Controller
 {
     /**
@@ -54,24 +56,31 @@ class ProductController extends Controller
              'CID'=>'required'
              // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
              ]);
-            $product = new Product($request->input()) ;
-     
-         if($file = $request->hasFile('image')) {
+            $product= new Product();
+
+        if( $request->hasFile('image')) {
+            $image = $request->file('image');
             
-            $file = $request->file('image') ;
             
-            $fileName = $file->getClientOriginalName() ;
-            $destinationPath = public_path().'/images/' ;
-            $file->move($destinationPath,$fileName);
-            $product->image = $fileName ;
-        }
-        // else
-        // {
-            // return view('product.create');
-            // $product->image='';
-        // }
-        Product::create($request->all());
-        return redirect()->route('product.index')->with('success','Product created successfully');
+            $filename = time() . rand().'.' . $image->getClientOriginalExtension();
+
+            $path = '/image/'.$filename;
+
+            $destinationpath = public_path(). '/image/';
+            $image->move($destinationpath, $filename);
+
+            $product->image = $path;
+            $product->name = $request->name;
+              $product->price = $request->price;
+                $product->CID = $request->CID;
+    }
+
+
+        $product->save();
+        
+       // Banner::create($form_data);
+
+        return redirect()->route('product.index')->with('success','Product added successfully');
     }
 
     /**
@@ -107,31 +116,43 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {         $product = Product::find($id);
-        request()->validate([
-            'name'=>'required',
-            'price'=>'required|numeric',
-            'CID'=>'required',
-            'image'=>''
-
-    ]);
-            $product = new Product($request->input()) ;
-     
-         if($file = $request->hasFile('image')) {
-            
-            $file = $request->file('image') ;
-            
-            $fileName = $file->getClientOriginalName() ;
-            $destinationPath = public_path().'/images/' ;
-            $file->move($destinationPath,$fileName);
-            $product->image = $fileName ;
-        }
-        else
+    {    request()->validate([
+            'name'=>'required|regex:/^[a-zA-Z\s]+$/',
+             'price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
+             'CID'=>'required'
+             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+             ]); 
+        $product = Product::find($id);
+        if($request->hasFile('image'))
         {
            
+            $userImage = public_path().$product->image;
+            
+            
+            if (File::exists($userImage)) 
+            { 
+                 unlink($userImage);
+    
+               
+            }
+
+            $image = Input::file('image');
+
+            $filename = time() . rand().'.' . $image->getClientOriginalExtension();
+            $path = '/image/'.$filename;
+
+            $destinationpath = public_path(). '/image/';
+
+            $image->move($destinationpath, $filename);
+            $product->image = $path;
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->CID = $request->CID;
         }
-        Product::find($id)->update($request->all());
-        return redirect()->route('product.index')->with('success','product updated successfully');
+            $product->save();
+            Product::find($id)->update($request->all());
+            return redirect()->route('product.index')->with('success','Product updated successfully');
+
     }
 
     /**
@@ -142,6 +163,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $image = \DB::table('product')->where('id', $id)->first();
+        $file= $image->image;
+        $filename = public_path().$file;
+        \File::delete($filename);
         Product::find($id)->delete();
         return redirect()->route('product.index')->with('success','Product deleted successfully');
     }
