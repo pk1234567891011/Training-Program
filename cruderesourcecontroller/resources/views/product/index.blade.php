@@ -41,7 +41,7 @@
 
 		<td>{{$products->name}}</td>
 		<td> 
-		  <img src="{{ URL::to('/') }}/images/{{ $products->image }}" class="img-thumbnail" /></td>
+		  <img src= "{{$products->image }}" class="img-thumbnail" /></td>
 		<td>{{$products->price}}</td>
 		<td>{{$products->category}}</td>
 		  
