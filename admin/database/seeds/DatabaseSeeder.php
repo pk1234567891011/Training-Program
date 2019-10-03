@@ -10,13 +10,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {DB::table('users')->insert([
-
-         'firstname'=>'Admin',
-         'lastname'=>'admin',
-         'email'=>'pk266394@gmail.com',
-         'role_id'=>2,
-         'password'=>bcrypt('admin123'),
-        ]);
+    {Eloquent::unguard();
+        $this->call(UsersTablesSeeder::class);
     }
 }

@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -78,15 +79,15 @@
        <div class="wrapper">
 
     <!-- Header -->
-    @include('header')
+    @include('admin.header')
 
     <!-- Sidebar -->
-    @include('sidebar')
+    @include('admin.sidebar')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        
+
         <!-- Main content -->
         <section class="content">
             <!-- Your Page Content Here -->
@@ -95,9 +96,9 @@
     </div><!-- /.content-wrapper -->
 
     <!-- Footer -->
-    @include('footer')
+    @include('admin.footer')
 
 </div>
-    
+
 </body>
 </html>
