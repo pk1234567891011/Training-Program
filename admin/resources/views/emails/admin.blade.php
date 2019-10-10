@@ -1,9 +1,9 @@
 <html>
     <head>
         <link rel="stylesheet" href="{{ asset ('/css/email.css')}}" >
-       <h1>Welcome to My Shopping Cart.</h1>
-       <h5>To log in when visiting our site just clickLoginorMy Accountat the top of every page, and </p>
-       <p>then enter your email address and password.</h5>
+        <h1>Welcome to My Shopping Cart.</h1>
+        <h5>To log in when visiting our site just clickLoginorMy Accountat the top of every page, and </p>
+        <p>then enter your email address and password.</h5>
     <head>
     <body>
         <div id="login_details">

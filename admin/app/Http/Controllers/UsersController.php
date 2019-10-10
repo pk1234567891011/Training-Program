@@ -15,8 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users=DB::table('users')
-            ->join('roles', 'users.role_id', '=', 'roles.role_id')
+        $users=Users::join('roles', 'users.role_id', '=', 'roles.role_id')
             ->select('users.*','roles.role_name as category')
              ->latest()->paginate(2);
       // $users = Users::latest()->paginate(5);
@@ -47,15 +46,22 @@ class UsersController extends Controller
         request()->validate([
             'firstname'=>'required|regex:/^[a-zA-Z]+$/',
             'lastname'=>'required|regex:/^[a-zA-Z]+$/',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:users,email',
             'status'=>'required',
              'role_id'=>'required',
-             'password'=>'required',
-            // 'password_confirmation'=>'required',
+             'password'=>'required|min:8',
+             //'password_confirmation'=>'required'
 
            
 
     ]);
+        //  $data=$request->all();
+        //  if($data['password']!=$data['password_confirmation']){
+        //      echo "Password not matching";
+        //      die;
+        //  }
+        // print_r($data);
+        // die;
         Users::create($request->all());
         return redirect()->route('users.index')->with('success','category created successfully');
 
@@ -100,12 +106,12 @@ class UsersController extends Controller
             'lastname'=>'required|regex:/^[a-zA-Z]+$/',
             'email'=>'required|email',
             'status'=>'required',
-             'role_id'=>'required',
-             'password'=>'required',
+            'role_id'=>'required',
+            'password'=>'required',
              //'password_confirmation'=>'required',
 
 
-    ]);
+        ]);
 
         Users::find($id)->update($request->all());
         return redirect()->route('users.index')->with('success','user updated successfully');

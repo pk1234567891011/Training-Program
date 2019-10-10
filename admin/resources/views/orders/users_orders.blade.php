@@ -24,20 +24,20 @@
                         <th >Created on</th> 
                     </tr>  
                     @foreach($orders as $order)   
-                    <tr>
-                    
-                        <td>{{$order->id}}</td> 
-                        <td>
-                    @foreach($order->orders as $pro)
-                        <a href="{{url('/orders/'.$order->id)}}"> {{$pro->product_id}}</a><br>
-                        @endforeach
-                        </td>
-                        <td>{{$order->shipping_method}}</td> 
-                        <td>{{$order->grand_total}}</td>
-                        <td>{{$order->status}}</td>
-                        <td>{{$order->created_at}}</td> 
-                    </tr>
-                     @endforeach          
+                        <tr>
+                        
+                            <td>{{$order->id}}</td> 
+                            <td>
+                                @foreach($order->orders as $pro)
+                                    <a href="{{url('/orders/'.$order->id)}}"> {{$pro->product_id}}</a><br>
+                                @endforeach
+                            </td>
+                            <td>{{$order->shipping_method}}</td> 
+                            <td>{{$order->grand_total}}</td>
+                            <td>{{$order->status}}</td>
+                            <td>{{$order->created_at}}</td> 
+                        </tr>
+                    @endforeach          
                 </table>
 			</div>
 		</div>

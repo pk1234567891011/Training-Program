@@ -14,8 +14,7 @@ class Product_ImageController extends Controller
      */
     public function index()
     {
-        $product_images=DB::table('product_images')
-             ->latest()->paginate(2);
+        $product_images=Product_images::latest()->paginate(2);
      
            
         return view('product_images.index',compact('product_images'))->with('i',(request()->input('page',1)-1)*2);

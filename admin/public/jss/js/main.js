@@ -163,7 +163,7 @@ $(document).ready(function(){
    
 	}
   });
-  $('#passwordForm').validate({
+$('#passwordForm').validate({
 	rules: {
 		
 		current_pwd: {
@@ -198,11 +198,42 @@ $(document).ready(function(){
 		new_pwd: {
 			required: "Please provide a password",
 			minlength: "Your password must be at least 8 characters long"
-		  },
+		},
 		  confirm_pwd: {
 			required: "Please provide a password",
 			equalTo: "your passwod should match"
-		  },
+		},
+	 
+	}
+});
+$('#users').validate({
+	rules: {
+		
+		password: {
+		  required: true,
+		  minlength: 8,
+		  maxlength:20
+		},
+		
+		password_confirmation: {
+			required: true,
+			minlength: 8,
+			maxlength:20,
+			equalTo:"#password"
+		}
+	  },
+	 
+	  messages: {
+	
+		password: {
+		  required: "Please provide a password",
+		  minlength: "Your password must be at least 8 characters long"
+		},
+		
+		password_confirmation: {
+			required: "Please provide a password",
+			equalTo: "your passwod should match"
+		},
 	 
 	  }
   });
@@ -248,3 +279,4 @@ $(document).ready(function(){
 		return false;
 	}
  }
+

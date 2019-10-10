@@ -74,6 +74,18 @@
 <script src="{{ asset ('/AdminLTE-2.4.15/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset ('/AdminLTE-2.4.15/dist/js/demo.js') }}"></script>
+<script src="{{ asset ('jss/js/jquery.validate.js')}}"></script>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!--  validation script  -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.0/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<!--  jsrender script  -->
+<script src="http://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
+<script src="{{ asset ('jss/js/main.js')}}"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
        <div class="wrapper">

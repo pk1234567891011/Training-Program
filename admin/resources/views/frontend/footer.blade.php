@@ -87,10 +87,10 @@
 							<h2>Service</h2>
 							<ul class="nav nav-pills nav-stacked">
 								<li><a href="#">Online Help</a></li>
-								<li><a href="{{url('/page/contact')}}">Contact Us</a></li>
-								<li><a href="#">Order Status</a></li>
-								<li><a href="#">Change Location</a></li>
-								<li><a href="#">FAQ’s</a></li>
+								<li><a href="{{ url('/page/contact')}}">Contact Us</a></li>
+								<li><a href="{{ url('/page/order-status')}}">Order Status</a></li>
+								<li><a href="{{url('/page/change-location')}}">Change Location</a></li>
+								<li><a href="{{url('/page/faq')}}">FAQ’s</a></li>
 							</ul>
 						</div>
 					</div>
@@ -98,11 +98,11 @@
 						<div class="single-widget">
 							<h2>Quock Shop</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">T-Shirt</a></li>
-								<li><a href="#">Mens</a></li>
-								<li><a href="#">Womens</a></li>
-								<li><a href="#">Gift Cards</a></li>
-								<li><a href="#">Shoes</a></li>
+								<li><a href="{{url('/page/t-shirts')}}">T-Shirt</a></li>
+								<li><a href="{{url('/page/mens')}}">Mens</a></li>
+								<li><a href="{{url('/page/womens')}}">Womens</a></li>
+								<li><a href="{{url('/page/gift-cards')}}">Gift Cards</a></li>
+								<li><a href="{{url('/page/shoes')}}">Shoes</a></li>
 							</ul>
 						</div>
 					</div>
@@ -110,11 +110,11 @@
 						<div class="single-widget">
 							<h2>Policies</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privecy Policy</a></li>
-								<li><a href="#">Refund Policy</a></li>
-								<li><a href="#">Billing System</a></li>
-								<li><a href="#">Ticket System</a></li>
+								<li><a href="{{url('/page/terms-o-use')}}">Terms of Use</a></li>
+								<li><a href="{{url('/page/privacy-policy')}}">Privacy Policy</a></li>
+								<li><a href="{{url('/page/refund-policy')}}">Refund Policy</a></li>
+								<li><a href="{{url('/page/billing-system')}}">Billing System</a></li>
+								<li><a href="{{url('/page/tickect-system')}}">Ticket System</a></li>
 							</ul>
 						</div>
 					</div>
@@ -122,11 +122,11 @@
 						<div class="single-widget">
 							<h2>About Shopper</h2>
 							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Company Information</a></li>
-								<li><a href="#">Careers</a></li>
-								<li><a href="#">Store Location</a></li>
-								<li><a href="#">Affillate Program</a></li>
-								<li><a href="#">Copyright</a></li>
+								<li><a href="{{url('/page/company-information')}}">Company Information</a></li>
+								<li><a href="{{url('/page/careers')}}">Careers</a></li>
+								<li><a href="{{url('/page/store-location')}}">Store Location</a></li>
+								<li><a href="{{url('/page/affillate-program')}}">Affillate Program</a></li>
+								<li><a href="{{url('/page/copyright')}}">Copyright</a></li>
 							</ul>
 						</div>
 					</div>
@@ -200,10 +200,10 @@
 		});
 	
 	 }
-	 function enableSubscriber(){
+	function enableSubscriber(){
 		
 		$('#btnSubmit').show();
 		$('#statusSubscribe').hide();
-	 }
+	}
 	</script>
 	

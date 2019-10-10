@@ -101,10 +101,10 @@ class OrdersController extends Controller
             'order_id'=>$user_details->id
             ];
           
-            Mail::send('emails.status', $messageData,function ($message) use ($email) {
+        Mail::send('emails.status', $messageData,function ($message) use ($email) {
                 $message->to($email)->subject('Order Details');
             });
-            UserOrder::find($id)->update($request->all());
+        UserOrder::find($id)->update($request->all());
         return redirect()->route('order.index')->with('success','status updated successfully');
     }
 

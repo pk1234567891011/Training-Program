@@ -2,32 +2,32 @@
 @extends('frontend.home')
 @section('content')
 
-<section id="slider"><!--slider-->
+	<section id="slider"><!--slider-->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
-							 @foreach($sliders as $photo)
-                <li data-target="#slider-carousel" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
-            @endforeach
-        </ol>
+							@foreach($sliders as $photo)
+                				<li data-target="#slider-carousel" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
+            				@endforeach
+        				</ol>
 
 						<div class="carousel-inner">
-              @foreach($sliders as $slider)
-              <div class="item image {{ $loop->first ? ' active' : '' }}">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+              				@foreach($sliders as $slider)
+								<div class="item image {{ $loop->first ? ' active' : '' }}">
+									<div class="col-sm-6">
+										<h1><span>E</span>-SHOPPER</h1>
+										<h2>Free E-Commerce Template</h2>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+										<button type="button" class="btn btn-default get">Get it now</button>
+									</div>
+									<div  class="col-sm-6">
+										<img class="girl img-responsive" src="{{$slider->banner_path}}" alt="slider" style="height:auto;width:auto"  title="Image Slideshow" >
+										<img src="images/home/pricing.png" class="pricing" alt="" />
+									</div>
 								</div>
-								<div  class="col-sm-6">
-                <img class="girl img-responsive" src="{{$slider->banner_path}}" alt="slider" style="height:auto;width:auto"  title="Image Slideshow" >
-                <img src="images/home/pricing.png" class="pricing" alt="" />
-								</div>
-							</div>
-              @endforeach
+              				@endforeach
 						</div>
 
 						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 	</section><!--/slider-->
-  <section>
+  	<section>
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-3">
@@ -50,48 +50,48 @@
 						<h2>Category</h2>
 						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
 							<div class="panel panel-default">
-              @foreach($category as $categorys)
-              @if($categorys->children->count())
-                  
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#{{$categorys->name}}">
-											<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-											{{$categorys->name}}
-										</a>
-									</h4>
-								</div>
-								<div id="{{$categorys->name}}" class="panel-collapse collapse">
-									<div class="panel-body">
+								@foreach($category as $categorys)
+									@if($categorys->children->count())
+											
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordian" href="#{{$categorys->name}}">
+													<span class="badge pull-right"><i class="fa fa-plus"></i></span>
+													{{$categorys->name}}
+												</a>
+											</h4>
+										</div>
+										<div id="{{$categorys->name}}" class="panel-collapse collapse">
+											<div class="panel-body">
 
-										<ul>
-                    @foreach($categorys->children as $child)
-											<li><a href="#">{{$child->name}} </a></li>
-                      @endforeach
-										</ul>
-									</div>
+												<ul>
+													@foreach($categorys->children as $child)
+														<li><a href="#">{{$child->name}} </a></li>
+													@endforeach
+												</ul>
+											</div>
 
-								</div>
-                @else
-                @if($categorys->parent_id==0)
-                <div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordian" href="#{{$categorys->name}}">
-											<span class="badge pull-right"></span>
-											{{$categorys->name}}
-										</a>
-									</h4>
-								</div> 
-                @endif
-              @endif
-              @endforeach
+										</div>
+									@else
+										@if($categorys->parent_id==0)
+											<div class="panel-heading">
+												<h4 class="panel-title">
+													<a data-toggle="collapse" data-parent="#accordian" href="#{{$categorys->name}}">
+														<span class="badge pull-right"></span>
+														{{$categorys->name}}
+													</a>
+												</h4>
+											</div> 
+                						@endif
+              						@endif
+              					@endforeach
 
 							</div>
 						</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+          			</div>
+        		</div>
+      		</div>
+    	</div>
+  	</div>
+<!-- </div> -->
 @endsection

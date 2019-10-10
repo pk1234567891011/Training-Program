@@ -16,8 +16,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banner=DB::table('banner')
-             ->latest()->paginate(2);
+        $banner=Banner::latest()->paginate(2);
       // $users = Users::latest()->paginate(5);
            
         return view('banner.index',compact('banner'))->with('i',(request()->input('page',1)-1)*2);
@@ -31,7 +30,7 @@ class BannerController extends Controller
     public function create()
     {
         $banner=Banner::all();
-          return view('banner.create');
+        return view('banner.create');
                 
     }
 
@@ -44,15 +43,11 @@ class BannerController extends Controller
     public function store(Request $request)
     {
          
-        /*$image = $request->file('image');
-        $new_name = rand() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('image'), $new_name);
-        $form_data = array(
-            'status'       =>   $request->status,
-            'banner_path'            =>   $new_name
-        );
-    */
-         $banner= new Banner();
+        $request->validate([
+            'image'=>'required|image',
+            'status'=>'required'
+        ]);
+        $banner= new Banner();
 
         if( $request->hasFile('image')) {
             $image = $request->file('image');
@@ -67,15 +62,13 @@ class BannerController extends Controller
 
             $banner->banner_path = $path;
             $banner->status = $request->status;
-    }
+        }
 
 
         $banner->save();
-        
-       // Banner::create($form_data);
 
         return redirect()->route('banner.index')->with('success','banner added successfully');
-      }
+    }
     
     
 
@@ -111,7 +104,10 @@ class BannerController extends Controller
      */
     public function update(Request $request, $id)
     {  
-    
+         $request->validate([
+            
+             'status'=>'required'
+         ]);
          $banner = Banner::find($id);
         if($request->hasFile('image'))
         {
@@ -137,9 +133,9 @@ class BannerController extends Controller
             $banner->banner_path = $path;
             $banner->status = $request->status;
         }
-            $banner->save();
-            Banner::find($id)->update($request->all());
-            return redirect()->route('banner.index')->with('success','banner updated successfully');
+        $banner->save();
+        Banner::find($id)->update($request->all());
+        return redirect()->route('banner.index')->with('success','banner updated successfully');
 
     }
         

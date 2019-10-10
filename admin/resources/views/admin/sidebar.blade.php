@@ -42,13 +42,18 @@
             <li class="active"><a href="{{route('product.index')}}"><i class="fa fa-circle-o"></i> Product Management</a></li>
             <li class="active"><a href="{{route('product_attributes.index')}}"><i class="fa fa-circle-o"></i> Product Attributes</a></li>
             <li class="active"><a href="{{route('coupon.index')}}"><i class="fa fa-circle-o"></i> Coupon Management</a></li>
-            <li class="active"><a href="{{url('order')}}"><i class="fa fa-circle-o"></i> Order Management</a></li>
+            <li class="active"><a href="{{url('order')}}"><i class="fa fa-circle-o"></i> Track Order</a></li>
             <li class="active"><a href="{{url('contact')}}"><i class="fa fa-circle-o"></i> Contact Management</a></li>
             <li class="active"><a href="{{url('view-newsletter-subscribers')}}"><i class="fa fa-circle-o"></i> Newsletter Management</a></li>
+            <li class="active"><a href="{{url('cms')}}"><i class="fa fa-circle-o"></i> CMS Management</a></li>
+            <li class="active"><a href="{{url('customer')}}"><i class="fa fa-circle-o"></i> Customer Details</a></li>
+            <li class="active"><a href="{{url('orderdetails')}}"><i class="fa fa-circle-o"></i> Order Details</a></li>
+            <li class="active"><a href="{{url('userOrder')}}"><i class="fa fa-circle-o"></i> User Order</a></li>
+
           </ul>
-        </li>
+        <!-- </li>
 view-newsletter-subscribers
-        <li>
+        <li> -->
           <a href="pages/widgets.html">
             <i class="fa fa-th"></i> <span>Widgets</span>
             <span class="pull-right-container">

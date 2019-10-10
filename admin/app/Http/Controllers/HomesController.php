@@ -36,10 +36,14 @@ class HomesController extends Controller
      */
     public function index()
     {   $category = Category::with('children')->get();
-        $sliders = Banner::orderby('id', 'desc')->paginate(10);
+        $sliders = Banner::where('status','active')->orderby('id', 'desc')->paginate(10);
+        // echo "<pre>";
+        // print_r($sliders);
+        // die;
         $images = Product_images::where('status', 'active')->get();
-        $productsAll = Product::has('imgs')->get();
-        return view('Eshopper.first', compact('sliders', 'category', 'images', 'productsAll'));
+        $productsAll = Product::has('imgs')->orderBy('id','DESC')->paginate(2);
+        
+        return view('Eshopper.first', compact('sliders', 'category', 'images', 'productsAll','paginate'));
 
     }
    
@@ -58,7 +62,7 @@ class HomesController extends Controller
         if ($request->isMethod('post')) {
             $request->validate([
                 'name' => 'required',
-                'email' => 'required',
+                'email' => 'required|email',
                 'password' => 'required',
 
             ]);
@@ -179,7 +183,7 @@ class HomesController extends Controller
             foreach ($subCategories as $subCat) {
                 $cat_ids[]= $subCat->id . ",";
             }
-            $categories=Product_Categories::whereIn('category_id', $cat_ids)->get();
+            $categories=Product_Categories::whereIn('category_id', $cat_ids)->orderBy('id','DESC')->paginate(2);
             
            
             foreach ($categories as $key => $product) {
@@ -198,7 +202,7 @@ class HomesController extends Controller
         else {
             $productCat = Product_categories::where(['category_id' => $categoryDetails->id])->get();
 
-            $productsAll = Product::whereIn('id', $productCat->pluck('product_id'))->get();
+            $productsAll = Product::whereIn('id', $productCat->pluck('product_id'))->orderBy('id','DESC')->paginate(2);
 
             $category = Category::with('children')->get();
 
@@ -227,11 +231,11 @@ class HomesController extends Controller
         $category = Category::with('children')->get();
         $sliders = Banner::orderby('id', 'desc')->paginate(10);
         
-        $recommended=Product::has('imgs')->where('id','!=',$productDetails->id)->get();
+        //$recommended=Product::has('imgs')->where('id','!=',$productDetails->id)->get();
         
-        $product_attributes_asso = Product_attributes_assoc::where('product_id', $productDetails->id)->first();
-        $product_attributes = Product_attributes::where('id', $product_attributes_asso->product_attribute_id)->first();
-        $product_attribute_value = Product_attribute_values::where('product_attribute_id', $product_attributes->id)->first();
+        //$product_attributes_asso = Product_attributes_assoc::where('product_id', $productDetails->id)->first();
+       // $product_attributes = Product_attributes::where('id', $product_attributes_asso->product_attribute_id)->first();
+       // $product_attribute_value = Product_attribute_values::where('product_attribute_id', $product_attributes->id)->first();
 
         $productsAll = Product::has('imgs')
             ->get();
@@ -244,7 +248,7 @@ class HomesController extends Controller
     public function account()
     {   $user_id = Auth::user()->id;
         $add = Address::where('userId', $user_id)->get();
-        $paginate = Address::latest()->paginate(3);
+        $paginate = Address::latest()->paginate(15);
         $userInfo = Users::where('id', $user_id)->first();
 
         return view('Eshopper.account', compact('add', 'userInfo', 'paginate'));
@@ -472,11 +476,10 @@ class HomesController extends Controller
                     $couponUsedDetails->couponcode = $data['coupon'];
                     $couponUsedDetails->remCoupon = $remCoupon;
                     $couponUsedDetails->save();
-                    Session::put('CouponAmount', $couponAmount);
-                    Session::put('Couponcode', $data['coupon']);
-                    return redirect()->back()->with('flash_message_success', 'Discount Coupon is applied successfully.You are availing discount');
-
                 }
+                Session::put('CouponAmount', $couponAmount);
+                Session::put('Couponcode', $data['coupon']);
+                
                 return redirect()->back()->with('flash_message_success', 'Discount Coupon is applied successfully.You are availing discount');
 
             }
@@ -673,7 +676,7 @@ class HomesController extends Controller
             return redirect('thanks');
         }
        else{
-        return redirect('paypal');
+        return redirect('paywithpaypal');
        }
         
     }
@@ -683,26 +686,29 @@ class HomesController extends Controller
        
         return view("orders.thanks",compact('$user_details','$order_details','$product'));
     }
-    public function paypal(Request $request){
-        $user_email=Auth::User()->email;
-        $userCart = Cart::where('user_email', $user_email)->delete();
-        $email=$user_email;
-        $productDetails=UserOrder::with('orders')->where('id',$order_id)->first();
-        $productDetails=json_decode(json_encode($productDetails),true);
-        $user_addresss=Address::where('userId', $user_id)->first();
+    // public function paypal(Request $request){
+    //     $user_email=Auth::User()->email;
+    //     $user_id=Auth::User()->id;
+    //     $order_id=Session::get('order_id');
+    //     //Session::put('grand_total',$data['grand_total']);
+    //     $userCart = Cart::where('user_email', $user_email)->delete();
+    //     $email=$user_email;
+    //     $productDetails=UserOrder::with('orders')->where('id',$order_id)->first();
+    //     $productDetails=json_decode(json_encode($productDetails),true);
+    //     $user_addresss=Address::where('userId', $user_id)->first();
        
-        $messageData=[
-            'email'=>$user_email,
-            'productDetails'=>$productDetails,
-            'user_addresss'=>$user_addresss,
+    //     $messageData=[
+    //         'email'=>$user_email,
+    //         'productDetails'=>$productDetails,
+    //         'user_addresss'=>$user_addresss,
             
-        ];
+    //     ];
       
-        Mail::send('emails.order', $messageData,function ($message) use ($email) {
-            $message->to($email)->subject('Order Details');
-        });
-        return view("orders.paypal");
-    }
+    //     Mail::send('emails.order', $messageData,function ($message) use ($email) {
+    //         $message->to($email)->subject('Order Details');
+    //     });
+    //     return view("orders.paypal");
+    // }
     public function userOrders(){
         $user_id=Auth::User()->id;
         $orders=UserOrder::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();

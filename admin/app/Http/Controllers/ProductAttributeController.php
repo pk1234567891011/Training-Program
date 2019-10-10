@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product_attributes;
 use App\Product_attribute_values;
+use App\Product_attributes_assoc;
 use DB;
 
 use Illuminate\Http\Request;
@@ -127,7 +128,7 @@ class ProductAttributeController extends Controller
     {
         $attribute_name = \DB::table('product_attributes')->where('id', $id)->first();
         $attribute_values = \DB::table('product_attribute_values')->where('product_attribute_id', $id)->get();
-
+        Product_attributes_assoc::where('product_attribute_id',$id)->delete();
         Product_attribute_values::whereIn('id', $attribute_values->pluck('id'))->delete();
         Product_attributes::find($id)->delete();
         return redirect()->route('product_attributes.index')->with('success', 'Attribute deleted successfully');

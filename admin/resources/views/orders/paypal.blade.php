@@ -1,11 +1,11 @@
 @extends('frontend.home')
 @section('content')
-<?php use App\UserOrder; 
+	<?php use App\UserOrder; 
 
-use App\Users;
-use App\User;
-?>
-<section id="cart_items">
+	use App\Users;
+	use App\User;
+	?>
+	<section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
@@ -32,15 +32,15 @@ use App\User;
 					<input type="hidden" name="business" value="kumaripri6@gmail.com">
 					<input type="hidden" name="item_name" value="{{ Session::get('order_id') }}">
 					<input type="hidden" name="currency_code" value="INR">
-					<input type="text" name="country" value="{{$getCountryCode->country_code}}">
+					<input type="hidden" name="country" value="{{$getCountryCode->country_code}}">
 					<input type="hidden" name="amount" value="{{ Session::get('grand_total') }}">
 					<input type="hidden" name="first_name" value="{{$userDetails->firstname}}">
-					<input type="text" name="last_name" value="{{$userDetails->lastname}}">
-					<input type="text" name="address1" value="{{$orderDetails->billing_address}}">
-					<input type="text" name="city" value="{{$orderDetails->billing_city}}">
-					<input type="text" name="state" value="{{$orderDetails->billing_state}}">
-					<input type="text" name="zip" value="{{$orderDetails->billing_pincode}}">
-					<input type="text" name="email" value="{{$userDetails->email}}">
+					<input type="hidden" name="last_name" value="{{$userDetails->lastname}}">
+					<input type="hidden" name="address1" value="{{$orderDetails->billing_address}}">
+					<input type="hidden" name="city" value="{{$orderDetails->billing_city}}">
+					<input type="hidden" name="state" value="{{$orderDetails->billing_state}}">
+					<input type="hidden" name="zip" value="{{$orderDetails->billing_pincode}}">
+					<input type="hidden" name="email" value="{{$userDetails->email}}">
 					<input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_paynow_107x26.png" alt="Pay Now">
 					<img alt="" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
 				</form>

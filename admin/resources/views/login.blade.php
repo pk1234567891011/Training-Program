@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
  <head>
@@ -20,7 +19,7 @@
    <h3 align="center">Admin Login</h3><br />
 
    @if(isset(Auth::user()->email))
-    <script>window.location="/main/successlogin";</script>
+    <script>window.location="/mains/successlogin";</script>
    @endif
 
    @if ($message = Session::get('error'))
@@ -40,7 +39,7 @@
     </div>
    @endif
 
-   <form method="post" action="{{ url('/main/checklogin') }}">
+   <form method="post" action="{{ url('/mains/checklogin') }}">
     {{ csrf_field() }}
     <div class="form-group">
      <label>Enter Email</label>

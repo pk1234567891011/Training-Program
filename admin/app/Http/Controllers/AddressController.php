@@ -28,8 +28,6 @@ class AddressController extends Controller
     {   $countries=Country::get();
         $user_id=Auth::user()->id;
         $userDetails=Users::find($user_id);
-       
-       
         return view('address.create',compact('countries','userDetails'));
 
     }
@@ -75,32 +73,32 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {       $request->validate([
+    {   $request->validate([
             'address'=>'required',
             'city'=>'required',
             'state'=>'required',
             'country'=>'required',
-            'pincode'=>'required',
-            'mobile'=>'required',
+            'pincode'=>'required|regex:/\b\d{6}\b/',
+            'mobile'=>'required|numeric||regex:/\d{10}/',
             'name'=>'required'
 
-            ]);
-            $data=$request->all();
-            $user_id=Auth::user()->id;
-            $userInfo=Users::where('id',$user_id)->first();
-            $userInfo->firstname=$data['name'];
-            $userInfo->save();
-            $address= Address::find($id);
-            $address->userId=$user_id;
-            $address->address=$data['address'];
-            $address->city=$data['city'];
-            $address->state=$data['state'];
-            $address->country=$data['country'];
-            $address->pincode=$data['pincode'];
-            $address->mobile=$data['mobile'];
-            $address->save();  
+        ]);
+        $data=$request->all();
+        $user_id=Auth::user()->id;
+        $userInfo=Users::where('id',$user_id)->first();
+        $userInfo->firstname=$data['name'];
+        $userInfo->save();
+        $address= Address::find($id);
+        $address->userId=$user_id;
+        $address->address=$data['address'];
+        $address->city=$data['city'];
+        $address->state=$data['state'];
+        $address->country=$data['country'];
+        $address->pincode=$data['pincode'];
+        $address->mobile=$data['mobile'];
+        $address->save();  
             
-            return redirect('account')->with('flash_message_success', 'Address added successfully');
+        return redirect('account')->with('flash_message_success', 'Address added successfully');
 
         
     
@@ -125,22 +123,22 @@ class AddressController extends Controller
             'city'=>'required',
             'state'=>'required',
             'country'=>'required',
-            'pincode'=>'required',
-            'mobile'=>'required',
+            'pincode'=>'required|regex:/\b\d{6}\b/',
+            'mobile'=>'required|numeric|regex:/\d{10}/',
 
         ]);
-            $data=$request->all();
-            $address=new Address();
-            $address->userId=$user_id;
-            $address->address=$data['address'];
-            $address->city=$data['city'];
-            $address->state=$data['state'];
-            $address->country=$data['country'];
-            $address->pincode=$data['pincode'];
-            $address->mobile=$data['mobile'];
-            $address->save();
+        $data=$request->all();
+        $address=new Address();
+        $address->userId=$user_id;
+        $address->address=$data['address'];
+        $address->city=$data['city'];
+        $address->state=$data['state'];
+        $address->country=$data['country'];
+        $address->pincode=$data['pincode'];
+        $address->mobile=$data['mobile'];
+        $address->save();
             
-            return redirect('account')->with('flash_message_success', 'Address updated successfully');
+        return redirect('account')->with('flash_message_success', 'Address updated successfully');
 
         }
     }

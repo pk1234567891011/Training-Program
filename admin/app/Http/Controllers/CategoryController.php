@@ -20,20 +20,17 @@ class CategoryController extends Controller
 */
 public function index()
 {
-$category= Category::latest()->paginate();
-$categories=DB::table('category as c1')
-->select('c1.id','c1.name','c1.status','c1.parent_id','c2.name as parent_name')
-->join('category as c2','c1.parent_id','=','c2.id')
+    $category= Category::latest()->paginate();
+    $categories=DB::table('category as c1')
+    ->select('c1.id','c1.name','c1.status','c1.parent_id','c2.name as parent_name')
+    ->join('category as c2','c1.parent_id','=','c2.id')
 
-->get();
+    ->get();
 
-$categorys=DB::table('category')
-          ->select('*')
-          ->where('parent_id','=','0')
-          ->get();
+    $categorys=Category::select('*')->where('parent_id','=','0')->get();
 
 
-return view('category.index',compact('categories','categorys','category','category'));
+    return view('category.index',compact('categories','categorys','category','category'));
 
 }
 
@@ -44,8 +41,8 @@ return view('category.index',compact('categories','categorys','category','catego
 */
 public function create()
 {
-$category=Category::all();
-return view('category.create',compact('category'));
+    $category=Category::all();
+    return view('category.create',compact('category'));
 }
 
 /**
@@ -56,15 +53,15 @@ return view('category.create',compact('category'));
 */
 public function store(Request $request)
 {
-$request->validate([
+    $request->validate([
 
-'name'=>'required',
-'status'=>'required',
-'parent_id'=>'required'
-]);
+        'name'=>'required',
+        'status'=>'required',
+        'parent_id'=>'required'
+    ]);
 // $category->parent_id=$request->parent_id;
-Category::create($request->all());
-return redirect()->route('category.index')->with('success','Category created successfully');
+    Category::create($request->all());
+    return redirect()->route('category.index')->with('success','Category created successfully');
 }
 
 
@@ -89,11 +86,11 @@ public function edit($id)
 {
    
 
-$categories=Category::where('id','=',$id)->first();
-$category = Category::find($id); 
-$categoryDetails=Category::where('id',$id)->first();
-$level=Category::where('parent_id',0)->get();
-return view('category.edit',compact('category','categories','categoryDetails','level'));
+    $categories=Category::where('id','=',$id)->first();
+    $category = Category::find($id); 
+    $categoryDetails=Category::where('id',$id)->first();
+    $level=Category::where('parent_id',0)->get();
+    return view('category.edit',compact('category','categories','categoryDetails','level'));
 }
 
 /**
@@ -105,16 +102,16 @@ return view('category.edit',compact('category','categories','categoryDetails','l
 */
 public function update(Request $request, $id)
 {
-$data=$request->all();
-    
-$category = Category::find($id);
-$request->validate([
+    $data=$request->all();
+        
+    $category = Category::find($id);
+    $request->validate([
 
-'name'=>'required',
-'status'=>'required'
-]);
-Category::find($id)->update($request->all());
-return redirect()->route('category.index')->with('success','Category updated successfully');
+        'name'=>'required',
+        'status'=>'required'
+    ]);
+    Category::find($id)->update($request->all());
+    return redirect()->route('category.index')->with('success','Category updated successfully');
 }
 
 /**

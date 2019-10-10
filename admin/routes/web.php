@@ -14,57 +14,62 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::view('admin/admin_template','admin.admin_template');
+//Route::view('admin/admin_template','admin.admin_template');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('users','UsersController');
-Route::resource('roles','RolesController');
+
 Route::get('index', function()
 {
     return view('index');
 });
 Auth::routes();
+Route::view('mains','login');
 
-//Route::get('/home', 'HomeController@index')->name('home');
-Route::view('admin/adminlogin','admin.adminlogin');
-Route::get('/main', 'MainController@index');
-Route::post('/main/checklogin', 'MainController@checklogin');
- Route::get('main/successlogin', 'MainController@successlogin');
- Route::get('logout', 'MainController@logout');
-Auth::routes();
-Route::view('register','register');
 
-Route::resource('banner','BannerController');
-Route::resource('configuration','ConfigurationController');
-Route::resource('category','CategoryController');
-Route::resource('product','ProductController');
-//Route::get("addmore","HomeController@addMore");
+Route::post('/mains/checklogin', 'MainController@checklogin');
+Route::get('mains/successlogin', 'MainController@successlogin');
+Route::group(['middleware'=>['adminlogin']],function(){
 
-//Route::post("addmore","HomeController@addMorePost");
- Route::resource('product_attributes','ProductAttributeController');
-// Route::post('product/insert', 'ProductController@insert')->name('product.insert');
-// Route::resource('product_images','Product_ImageController');
-//Route::get('product/create/{id}', 'ProductController@getValues');
-//Route::get('myform/ajax/{id}',array('as'=>'myform.ajax','uses'=>'ProductController@myformAjax'));
-Route::resource('coupon','CouponController');
-Route::view('Eshopper','frontend.home');
+    Route::post('add-subscriber-email','NewsletterController@addSubscriber');
+    Route::get('/view-newsletter-subscribers','NewsletterController@viewNewsletterSubscribers');
+    Route::get('/update-newsletter-status/{id}/{status}','NewsletterController@updateNewsletterSubscribers');
+    Route::get('/delete-newsletter-email/{id}','NewsletterController@deleteNewsletterSubscribers');
+    Route::get('/export-newsletter-email','NewsletterController@exportNewsletterSubscribers');
+    Route::resource('/cms','CMSController');
+    Route::resource('order','OrdersController');
+    Route::resource('contact','ContactController');
+    Route::get('customer','AdminOrderController@customer');
+    Route::get('orderdetails','AdminOrderController@orderdetails');
+    Route::get('userOrder','AdminOrderController@userOrder');
+    Route::resource('users','UsersController');
+    Route::resource('roles','RolesController');
+
+    Route::resource('banner','BannerController');
+    Route::resource('configuration','ConfigurationController');
+    Route::resource('category','CategoryController');
+    Route::resource('product','ProductController');
+
+    Route::resource('product_attributes','ProductAttributeController');
+    // Route::post('product/insert', 'ProductController@insert')->name('product.insert');
+    // Route::resource('product_images','Product_ImageController');
+    //Route::get('product/create/{id}', 'ProductController@getValues');
+    Route::get('myform/ajax/{id}',array('as'=>'myform.ajax','uses'=>'ProductController@myformAjax'));
+    Route::resource('coupon','CouponController');
+});
+Route::get('logout', 'MainController@logout');
+// Route::view('Eshopper','frontend.home');
 Route::resource('homes','HomesController');
 //Route::get('/home/{name}','HomesController@products');
 Route::resource('login','HomesController');
 Route::get('/login', 'HomeController@login')->name('login');
 Route::match(['GET','POST'],'/login-register','HomesController@register');
-Route::get('/main', 'MainController@index');
+
 Route::post('/login-register/checklogin', 'HomesController@checkslogin');
 Route::get('login-register/successlogin', 'HomesController@successlogins');
 Route::get('logouts', 'HomesController@logouts');
 Route::get('/products/{url}','HomesController@products');
 Route::match(['GET','POST'],'forgot-password','HomesController@forgotPassword');
-Route::post('add-subscriber-email','NewsletterController@addSubscriber');
-Route::get('/view-newsletter-subscribers','NewsletterController@viewNewsletterSubscribers');
-Route::get('/update-newsletter-status/{id}/{status}','NewsletterController@updateNewsletterSubscribers');
-Route::get('/delete-newsletter-email/{id}','NewsletterController@deleteNewsletterSubscribers');
-Route::get('/export-newsletter-email','NewsletterController@exportNewsletterSubscribers');
 
 Route::group(['middleware'=>['frontlogin']],function(){
     Route::match(['GET','POST'],'account','HomesController@account');
@@ -82,7 +87,6 @@ Route::group(['middleware'=>['frontlogin']],function(){
     Route::match(['get','post'],'/order-review','HomesController@orderReview');
     Route::match(['get','post'],'/place-order','HomesController@placeOrder');
     Route::get('/thanks','HomesController@thanks');
-    Route::get('/paypal','HomesController@paypal');
     Route::get('/orders','HomesController@userOrders');
     Route::get('/orders/{id}','HomesController@userOrderDetails');
     Route::match(['GET','POST'],'add-wishlist','HomesController@addtowishlist');
@@ -94,9 +98,14 @@ Route::group(['middleware'=>['frontlogin']],function(){
     Route::match(['GET','POST'],'track_details','HomesController@trackOrder');
     Route::post('/update-user-pwd','HomesController@updatePassword');
     Route::resource('address','AddressController');
-
+    
+    Route::match(['get','post'],'/page/{url}','CMSController@cmsPage');
    
 });
-Route::resource('order','OrdersController');
-Route::resource('contact','ContactController');
 
+
+Route::get('paywithpaypal', array('as' => 'addmoney.paywithpaypal','uses' => 'AddMoneyController@payWithPaypal',));
+
+Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
+
+Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus',));

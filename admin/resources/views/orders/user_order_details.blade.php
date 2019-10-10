@@ -1,7 +1,7 @@
 @extends('frontend.home')
 @section('content')
 
-<section id="cart_items">
+    <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
@@ -22,12 +22,12 @@
                        
                     </tr>     
                     <tr>
-                    @foreach($orderDetails->orders as $pro)
-                        <td>{{$pro->quantity}}</td> 
-                        <td>{{$pro->amount}}</td>
+                        @foreach($orderDetails->orders as $pro)
+                            <td>{{$pro->quantity}}</td> 
+                            <td>{{$pro->amount}}</td>
                         
                     </tr>
-                     @endforeach          
+                        @endforeach          
                 </table>
 			</div>
 		</div>

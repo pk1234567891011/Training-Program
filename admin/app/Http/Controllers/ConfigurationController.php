@@ -16,7 +16,7 @@ class ConfigurationController extends Controller
     {
        //$configurations=DB::table('configuration')
              //->latest()->paginate(2);
-       $configuration= Configuration::latest()->paginate(2);
+        $configuration= Configuration::latest()->paginate(2);
            
         return view('configuration.index',compact('configuration'))->with('i',(request()->input('page',1)-1)*2);
     }
@@ -29,7 +29,7 @@ class ConfigurationController extends Controller
     public function create()
     {
         $configuration=Configuration::all();
-          return view('configuration.create');
+        return view('configuration.create');
     }
 
     /**
@@ -42,9 +42,9 @@ class ConfigurationController extends Controller
     {
         $request->validate([
 
-         'conf_key'=>'required',
-         'conf_value'=>'required',
-         'status'=>'required'
+            'conf_key'=>'required',
+            'conf_value'=>'required',
+            'status'=>'required'
         ]);
         Configuration::create($request->all());
         return redirect()->route('configuration.index')->with('success','Configuration created successfully');
@@ -70,7 +70,7 @@ class ConfigurationController extends Controller
      */
     public function edit($id)
     {
-       $configuration = Configuration::find($id);
+        $configuration = Configuration::find($id);
         return view('configuration.edit',compact('configuration'));
     }
 
@@ -86,9 +86,9 @@ class ConfigurationController extends Controller
         $configuration = Configuration::find($id);
         $request->validate([
 
-         'conf_key'=>'required',
-         'conf_value'=>'required',
-         'status'=>'required'
+            'conf_key'=>'required',
+            'conf_value'=>'required',
+            'status'=>'required'
         ]);
         Configuration::find($id)->update($request->all());
         return redirect()->route('configuration.index')->with('success','Configuration updated successfully');
@@ -102,7 +102,7 @@ class ConfigurationController extends Controller
      */
     public function destroy($id)
     {
-       Configuration::find($id)->delete();
+        Configuration::find($id)->delete();
         return redirect()->route('configuration.index')->with('success','Configuration deleted successfully');
     }
 }

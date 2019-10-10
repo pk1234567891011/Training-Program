@@ -44,6 +44,7 @@ class ProductController extends Controller
     public function myformAjax($id){
         //$values = DB::table("product_attribute_values")->where("product_attribute_id",$id)->pluck("attribute_value","id");
         $values = Product_attribute_values::where("product_attribute_id",$id)->pluck("attribute_value","id");
+       
         return json_encode($values);
 
     }
@@ -61,21 +62,19 @@ class ProductController extends Controller
             'sku' => 'required',
             'short_description' => 'required',
             'long_description' => 'required',
-            'price' => 'required',
-            'special_price' => 'required',
+            'price' => 'required|numeric',
+            'special_price' => 'required|numeric',
             'special_price_from' => 'required',
-            'special_price_to' => 'required',
+            'special_price_to' => 'required|after_or_equal:special_price_from',
             'status' => 'required',
-            'quantity' => 'required',
+            'quantity' => 'required|numeric',
             'meta_description' => 'required',
             'meta_title' => 'required',
             'meta_keywords' => 'required',
             'is_featured' => 'required',
             'CID'=>'required',
             'names'=>'required',
-            'names'=>'required',
-            'drop'=>'required',
-            'value'=>'required'
+          
         ]);
 
         Product::create($request->all());

@@ -10,8 +10,6 @@ class NewsletterController extends Controller
     public function chkSubscriber(Request $request){
         if($request->ajax()){
             $data=$request->all();
-           
-
             $subscriberCount=NewsletterSubscriber::where('email',$data['subscriber_email'])->count();
             if($subscriberCount>0){
                echo "exists";

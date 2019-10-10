@@ -1,39 +1,39 @@
 @extends('admin.admin_template')
 @section('content')
- <form name="add_name" id="add_name" action="{{url('product', [$product->id])}}" method="POST"  enctype="multipart/form-data">
+  <form name="add_name" id="add_name" action="{{url('product', [$product->id])}}" method="POST"  enctype="multipart/form-data">
     <input type="hidden" name="_method" value="PUT">
 
- 	{{csrf_field()}}
- 	@if(count($errors)>0)
-<div class="alert alert-danger">
-<strong>Whoops!!!</strong> There are some problems with your inputs.</br>
-<ul>
-@foreach($errors->all() as $error)
-<li>{{ $error}}</li>
-@endforeach
-</ul>
-</div>
-@endif
-<div class="row">
+ 	  {{csrf_field()}}
+ 	  @if(count($errors)>0)
+      <div class="alert alert-danger">
+        <strong>Whoops!!!</strong> There are some problems with your inputs.</br>
+        <ul>
+          @foreach($errors->all() as $error)
+            <li>{{ $error}}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+    <div class="row">
     
-         <div class="table-responsive">
+      <div class="table-responsive">
 
-                <table class="table table-bordered" id="dynamic_field">
-                   <tr>
-                     <td>
-		<div class="form-group">
-			 <label for="ProductName">Product Name:</label>
-            <input type="text" class="form-control" name="name" value="{{$product->name}}">
-		</div>
-                     </td>
-                     <td>
-                     <div class="form-group">
-			 <label for="sku">sku:</label>
-            <input type="text" class="form-control" name="sku" value="{{$product->sku}}">
-		</div>
-                     </td>
-                   </tr>
-                   <tr>
+        <table class="table table-bordered" id="dynamic_field">
+          <tr>
+            <td>
+              <div class="form-group">
+                <label for="ProductName">Product Name:</label>
+                <input type="text" class="form-control" name="name" value="{{$product->name}}">
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <label for="sku">sku:</label>
+                <input type="text" class="form-control" name="sku" value="{{$product->sku}}">
+              </div>
+            </td>
+          </tr>
+              <tr>
                      <td>
                      <div class="form-group">
 			 <label for="shortDescription">Short Description:</label>
