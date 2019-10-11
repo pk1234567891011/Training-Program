@@ -34,9 +34,13 @@ class HomesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function slider(){
+        $sliders = Banner::where('status','active')->orderby('id', 'desc')->get();
+        return view('Eshopper.slider', compact('sliders'));
+    }
     public function index()
     {   $category = Category::with('children')->get();
-        $sliders = Banner::where('status','active')->orderby('id', 'desc')->paginate(10);
+        $sliders = Banner::where('status','active')->orderby('id', 'desc')->get();
         // echo "<pre>";
         // print_r($sliders);
         // die;
@@ -174,7 +178,7 @@ class HomesController extends Controller
         if ($categoryCount == 0) {
             abort(404);
         }
-        $sliders = Banner::orderby('id', 'desc')->paginate(10);
+        $sliders = Banner::orderby('id', 'desc')->get();
         
         if ($categoryDetails->parent_id == 0) {
             $subCategories = Category::where(['parent_id' => $categoryDetails->id])->get();

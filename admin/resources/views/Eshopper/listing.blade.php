@@ -3,8 +3,8 @@
 @extends('frontend.home')
 @section('content')
 
-	<section id="slider"><!--slider-->
-		<div class="container">
+	<!-- <section id="slider">slider -->
+		<!-- <div class="container">
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
@@ -42,7 +42,8 @@
 				</div>
 			</div>
 		</div>
-	</section><!--/slider-->
+	</section>/slider -->
+	@include('Eshopper.slider')
   	<section>
 		<div class="container">
 			<div class="row">
@@ -129,12 +130,13 @@
 								</div>
 						
 								@endforeach
-								<div align ="center">
-									{{ $productsAll->links() }}
-								</div>
-					
+								
 							
 							</div>
+							<div align ="center">
+								{{ $productsAll->links() }}
+							</div>
+					
 							@else
 							<h2 class="title text-center">{{$categoryDetails->name}}</h2>
 							@foreach($categories as $products)

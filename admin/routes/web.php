@@ -29,13 +29,9 @@ Route::view('mains','login');
 
 Route::post('/mains/checklogin', 'MainController@checklogin');
 Route::get('mains/successlogin', 'MainController@successlogin');
+Route::get('slider','HomesController@slider');
 Route::group(['middleware'=>['adminlogin']],function(){
 
-    Route::post('add-subscriber-email','NewsletterController@addSubscriber');
-    Route::get('/view-newsletter-subscribers','NewsletterController@viewNewsletterSubscribers');
-    Route::get('/update-newsletter-status/{id}/{status}','NewsletterController@updateNewsletterSubscribers');
-    Route::get('/delete-newsletter-email/{id}','NewsletterController@deleteNewsletterSubscribers');
-    Route::get('/export-newsletter-email','NewsletterController@exportNewsletterSubscribers');
     Route::resource('/cms','CMSController');
     Route::resource('order','OrdersController');
     Route::resource('contact','ContactController');
@@ -56,7 +52,14 @@ Route::group(['middleware'=>['adminlogin']],function(){
     //Route::get('product/create/{id}', 'ProductController@getValues');
     Route::get('myform/ajax/{id}',array('as'=>'myform.ajax','uses'=>'ProductController@myformAjax'));
     Route::resource('coupon','CouponController');
+    
 });
+// Route::view('news','news');
+//Route::post('trial','NewsletterController@news');
+Route::match(['GET','POST'],'trial','NewsletterController@news');
+Route::get('usersregistered', 'ChartController@index');
+Route::get('SalesReport', 'ChartController@sales');
+Route::get('CouponUsed', 'ChartController@couponused');
 Route::get('logout', 'MainController@logout');
 // Route::view('Eshopper','frontend.home');
 Route::resource('homes','HomesController');

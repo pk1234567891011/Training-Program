@@ -49,7 +49,12 @@
             <li class="active"><a href="{{url('customer')}}"><i class="fa fa-circle-o"></i> Customer Details</a></li>
             <li class="active"><a href="{{url('orderdetails')}}"><i class="fa fa-circle-o"></i> Order Details</a></li>
             <li class="active"><a href="{{url('userOrder')}}"><i class="fa fa-circle-o"></i> User Order</a></li>
-
+            <li class="active"><a href=""><i class="fa fa-circle-o"></i>Reports</a> </li>
+            <ul>
+            <li class="active"><a href="{{url('SalesReport')}}"><i class="fa fa-circle-o"></i> Sales Report</a></li>
+            <li class="active"><a href="{{url('usersregistered')}}"><i class="fa fa-circle-o"></i> Users Registered</a></li>
+            <li class="active"><a href="{{url('CouponUsed')}}"><i class="fa fa-circle-o"></i> Coupons Used</a></li>
+            </ul>
           </ul>
         <!-- </li>
 view-newsletter-subscribers
