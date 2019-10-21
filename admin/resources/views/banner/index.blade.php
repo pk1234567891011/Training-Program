@@ -3,10 +3,9 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="pull-right">
-            <div style="position: absolute; margin-right: 20px">
-            	<a  href="{{route('banner.create')}}"
-           			style="position: absolute;
-					margin-left: -203px; top: 100px">Create Banner</a>
+            <div class="create_div" >
+            	<a class="create_link"  href="{{route('banner.create')}}"
+           			>Create Banner</a>
             </div>
         </div>
     </div>
@@ -16,8 +15,7 @@
 		<p>{{ $message }}</p>
 	</div>
 @endif
-<div style="position: absolute;top: 191px;">
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+<div class="table_div" >
 	<table id="myTable" class="table table-bordered" >
 		<tr>
 			<th >Banner</th>
@@ -27,8 +25,8 @@
 		@foreach($banner as $banners)
 			<tr>
 				<td>
-					<img src="{{ URL::to('/') }}{{ $banners->banner_path }}" class="img-thumbnail" /
-						style="height: 80px;width: 80px">
+					<img src="{{ URL::to('/') }}{{ $banners->banner_path }}" class="img-thumbnail banner_image" /
+					>
 				</td>
 				<td>{{$banners->status}}</td>
 				<td>

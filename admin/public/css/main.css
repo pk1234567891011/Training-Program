@@ -2576,3 +2576,19 @@ ol.progtrckr li.progtrckr-todo:before {
   font-size: 2.2em;
   bottom: -1.2em;
 }
+.create_link{
+  position: absolute;
+  margin-left: -203px; top: 100px
+}
+.create_div{
+  position: absolute; 
+  margin-right: 20px;
+}
+.table_div {
+  position: absolute;
+  top: 191px;
+}
+.banner_image{
+  height: 80px;
+  width: 80px
+}

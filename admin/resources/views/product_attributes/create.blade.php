@@ -14,6 +14,11 @@
 
         </div>
     @endif
+    @if(Session::has('flash_message_error'))
+		<div class="alert alert-error">
+			<p>{!! session('flash_message_error') !!}</p>
+		</div>
+	@endif
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">

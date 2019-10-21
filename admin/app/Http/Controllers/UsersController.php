@@ -17,10 +17,10 @@ class UsersController extends Controller
     {
         $users=Users::join('roles', 'users.role_id', '=', 'roles.role_id')
             ->select('users.*','roles.role_name as category')
-             ->latest()->paginate(2);
+             ->paginate(2);
       // $users = Users::latest()->paginate(5);
            
-        return view('users.index',compact('users'))->with('i',(request()->input('page',1)-1)*2);
+        return view('users.index',compact('users'));
     }
 
     /**

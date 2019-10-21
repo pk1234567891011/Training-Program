@@ -1,7 +1,13 @@
 <?php
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite;
+use Auth;
+use Exception;
 namespace App\Http\Controllers;
-
+use Laravel\Socialite\Facades\Socialite;
 use App\Address;
 use App\Banner;
 use App\DeliveryAddresses;
@@ -164,6 +170,76 @@ class HomesController extends Controller
     {
         return redirect('homes');
     }
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback()
+    {  
+            $facebookUser = Socialite::driver('facebook')->stateless()->user();
+            $existUser = Users::where('email',$facebookUser->email)->first();
+            
+            // echo "try";
+            // die;
+            if($existUser) {
+                Auth::loginUsingId($existUser->id);
+                Session::put('frontSession', $facebookUser->email);
+
+            }
+            else {
+                   $user = new Users;
+                   $user->name= $facebookUser->name;
+                   $user->email= $facebookUser->email;
+                   $user->password= bcrypt(123456789);
+                   $user->status= "active";
+                   $user->role_id=5;
+                   $user->save();
+                Auth::loginUsingId($user->id);
+                Session::put('frontSession',$facebookUser->email);
+
+            }
+            return redirect()->to('/homes');
+        
+    }
+   public function redirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+
+    public function callback()
+    {
+        
+            
+        
+            $googleUser = Socialite::driver('google')->stateless()->user();
+            $existUser = Users::where('email',$googleUser->email)->first();
+            
+            if($existUser) {
+                Auth::loginUsingId($existUser->id);
+                Session::put('frontSession', $googleUser->email);
+
+            }
+            else {
+                   $user = new Users;
+                   $user->name= $facebookUser->name;
+                   $user->email= $facebookUser->email;
+                   $user->password= bcrypt(123456789);
+                   $user->status= "active";
+                   $user->role_id=5;
+                   $user->save();
+                Auth::loginUsingId($user->id);
+                Session::put('frontSession',$googleUser->email);
+            }
+            return redirect()->to('/homes');
+       
+    }
     public function logouts()
     {
         Auth::logout();
@@ -204,13 +280,12 @@ class HomesController extends Controller
 
         } 
         else {
+          
             $productCat = Product_categories::where(['category_id' => $categoryDetails->id])->get();
 
             $productsAll = Product::whereIn('id', $productCat->pluck('product_id'))->orderBy('id','DESC')->paginate(2);
 
             $category = Category::with('children')->get();
-
-            
 
         }
         return view('Eshopper.listing', compact('productsAll', 'product', 'image', 'categories','sliders', 'category', 'categoryDetails'));
@@ -222,16 +297,16 @@ class HomesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $user_id = Auth::user()->id;
-        echo $user_id;
-        exit();
-    }
+    // public function store(Request $request)
+    // {
+    //     $user_id = Auth::user()->id;
+    //     echo $user_id;
+    //     exit();
+    // }
     public function prod($id)
     {
         $productDetails = Product::where('id', $id)->first();
-    
+         
         $category = Category::with('children')->get();
         $sliders = Banner::orderby('id', 'desc')->paginate(10);
         
@@ -282,6 +357,7 @@ class HomesController extends Controller
             die;
 
         }
+    
     }
     public function updatePassword(Request $request)
     {
@@ -298,37 +374,48 @@ class HomesController extends Controller
         }
     }
     public function addtocart(Request $request)
-    {
+    {      
         Session::forget('CouponAmount');
         Session::forget('CouponCode');
         $data = $request->all();
         $user_email=Auth::User()->email;
-        //print_r($data);
-       // die;
+        
         $countProduct = Cart::where(['product_id' => $data['product_id'], 'user_email' => $user_email])->count();
-        if ($countProduct > 0) {
-            return redirect()->back()->with('flash_message_error', 'Product already exists in the cart');
+        $product_details=Product::where('id',$data['product_id'])->first();
+        if($data['quantity']>$product_details->quantity){
+        return redirect()->back()->with('flash_message_error', 'Required quantity is not availabel');
+        }
+   
+        else if ($countProduct > 0) {
+            return redirect()->back()->with('flash_message_error', 'Product already exists in the cart
+            ');
         } else {
             $getSku = Product::where('id', $data['product_id'])->first();
             Cart::insert(['product_id' => $data['product_id'], 'product_name' => $data['product_name'], 'product_code' => $getSku->sku, 'price' => $data['price'], 'quantity' => $data['quantity'], 'user_email' => $user_email]);
+            
         }
         return redirect('cart')->with('flash_message_success', 'Product has been added to cart|');
 
     }
     public function addtowishlist(Request $request)
     {
-       // Session::forget('CouponAmount');
-        //Session::forget('CouponCode');
+       
         $data = $request->all();
         $user_email=Auth::User()->email;
         $user_id=Auth::User()->id;
-       //$data=$request->all();
+      
        
         $countProduct = Wishlist::where(['product_id' => $data['product_id'], 'user_id' => $user_id])->count();
-  
-        if ($countProduct > 0) {
-            return redirect()->back()->with('flash_message_error', 'Product already exists in the cart');
-        } else {
+        $product_details=Product::where('id',$data['product_id'])->first();
+        if($data['quantity']>$product_details->quantity){
+        return redirect()->back()->with('flash_message_error', 'Required quantity is not availabel');
+        }
+   
+        else if ($countProduct > 0) {
+            return redirect()->back()->with('flash_message_error', 'Product already exists in the cart
+            ');
+        } 
+         else {
             Wishlist::insert(['product_id' => $data['product_id'],'user_id'=>$user_id]);
         }
         return redirect('wishlist')->with('flash_message_success', 'Product has been added to wishlist|');
@@ -365,7 +452,6 @@ class HomesController extends Controller
 
             $productsDetails = Product::whereIn('id', $userWishlist->pluck('product_id'))->get();
         }
-        // $productDetails = Product::where('id', $userWishlist->product_id)->first();
         
        
         foreach ($userWishlist as $key => $product) {
@@ -409,7 +495,7 @@ class HomesController extends Controller
            return redirect()->back()->with('flash_message_error', 'Product already exists in the cart');
         } 
         else {
-            Cart::insert(['product_id' => $getProduct->id, 'product_name' => $getProduct->name, 'product_code' => $getProduct->sku, 'price' => $getProduct->price, 'quantity' => $getProduct->quantity, 'user_email' => $user_email]);
+            Cart::insert(['product_id' => $getProduct->id, 'product_name' => $getProduct->name, 'product_code' => $getProduct->sku, 'price' => $getProduct->price, 'quantity' => 1, 'user_email' => $user_email]);
             wishlist::where('product_id',$getProduct->id)->delete();
         }
         
@@ -687,32 +773,9 @@ class HomesController extends Controller
     public function thanks(Request $request){
         $user_email=Auth::User()->email;
         $userCart = Cart::where('user_email', $user_email)->delete();
-       
         return view("orders.thanks",compact('$user_details','$order_details','$product'));
     }
-    // public function paypal(Request $request){
-    //     $user_email=Auth::User()->email;
-    //     $user_id=Auth::User()->id;
-    //     $order_id=Session::get('order_id');
-    //     //Session::put('grand_total',$data['grand_total']);
-    //     $userCart = Cart::where('user_email', $user_email)->delete();
-    //     $email=$user_email;
-    //     $productDetails=UserOrder::with('orders')->where('id',$order_id)->first();
-    //     $productDetails=json_decode(json_encode($productDetails),true);
-    //     $user_addresss=Address::where('userId', $user_id)->first();
-       
-    //     $messageData=[
-    //         'email'=>$user_email,
-    //         'productDetails'=>$productDetails,
-    //         'user_addresss'=>$user_addresss,
-            
-    //     ];
-      
-    //     Mail::send('emails.order', $messageData,function ($message) use ($email) {
-    //         $message->to($email)->subject('Order Details');
-    //     });
-    //     return view("orders.paypal");
-    // }
+
     public function userOrders(){
         $user_id=Auth::User()->id;
         $orders=UserOrder::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();

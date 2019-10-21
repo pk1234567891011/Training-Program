@@ -6,7 +6,7 @@
 	<p>{{ $message }}</p>
 </div>
 @endif
-<div style="position: absolute;top: 191px;">
+<div class="table_div">
 <table class="table table-bordered" style="width: 100%">
 	<tr>
 		<th> Id</th>

@@ -56,37 +56,9 @@
 						<div class="col-sm-5">
 							<div class="view-product">
 								<img src="{{ URL::to('/') }}/products/{{ $product_image->image_name }}" alt="" />
-								<h3>ZOOM</h3>
-							</div>
-							<div id="similar-product" class="carousel slide" data-ride="carousel">
 								
-								  <!-- Wrapper for slides -->
-								    <div class="carousel-inner">
-										<div class="item active">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar2.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>
-										<div class="item">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar2.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>
-										<div class="item">
-										  <a href=""><img src="{{asset('images/product-details/similar1.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar2.jpg')}}" alt=""></a>
-										  <a href=""><img src="{{asset('images/product-details/similar3.jpg')}}" alt=""></a>
-										</div>		
-									</div>
-
-								  <!-- Controls -->
-								  <a class="left item-control" href="#similar-product" data-slide="prev">
-									<i class="fa fa-angle-left"></i>
-								  </a>
-								  <a class="right item-control" href="#similar-product" data-slide="next">
-									<i class="fa fa-angle-right"></i>
-								  </a>
 							</div>
+						
 
 						</div>
 						<div class="col-sm-7">
@@ -95,7 +67,7 @@
 								<input type="hidden" name="product_id" value="{{$productDetails->id}}">
 								<input type="hidden" name="product_name" value="{{$productDetails->name}}">
 								<input type="hidden" name="price" value="{{$productDetails->price}}">
-								<input type="hidden" name="quantity" value="{{$productDetails->quantity}}">
+								
 								
 								<div class="product-information"><!--/product-information-->
 									<img src="{{asset('images/product-details/new.jpg')}}" class="newarrival" alt="" />
@@ -105,7 +77,7 @@
 									<span>
 										<span>INR {{$productDetails->price}}</span>
 										<label>Quantity:</label>
-										<input type="text" value="{{$productDetails->quantity}}" />
+										<input type="text" name="quantity" value="1" />
 										<button type="submit" class="btn btn-fefault cart" style="margin-left: -14px;margin-top: 14px;">
 											<i class="fa fa-shopping-cart"></i>
 											Add to cart
@@ -119,6 +91,7 @@
 							<form name="addtowishlistForm" id="addtowishlistForm" method="POST" action="{{url('add-wishlist')}}">
 							{{ csrf_field() }}
 								<input type="hidden" name="product_id" value="{{$productDetails->id}}">
+								<input type="hidden" name="quantity" value="1">
 								<button type="submit" class="btn btn-fefault cart" style="position: absolute;top: 266px;right: 26px;width: 125px;">
 									<i class="fa fa-shopping-cart"></i>
 											Add to Wishlist

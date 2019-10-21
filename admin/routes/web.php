@@ -26,7 +26,12 @@ Route::get('index', function()
 Auth::routes();
 Route::view('mains','login');
 
-
+//facebook
+Route::get('login/facebook', 'HomesController@redirectToProvider');
+Route::get('login/facebook/callback', 'HomesController@handleProviderCallback');
+//google
+Route::get('/redirect', 'HomesController@redirect');
+Route::get('/callback', 'HomesController@callback');
 Route::post('/mains/checklogin', 'MainController@checklogin');
 Route::get('mains/successlogin', 'MainController@successlogin');
 Route::get('slider','HomesController@slider');
@@ -69,7 +74,7 @@ Route::get('/login', 'HomeController@login')->name('login');
 Route::match(['GET','POST'],'/login-register','HomesController@register');
 
 Route::post('/login-register/checklogin', 'HomesController@checkslogin');
-Route::get('login-register/successlogin', 'HomesController@successlogins');
+ Route::get('login-register/successlogin', 'HomesController@successlogins');
 Route::get('logouts', 'HomesController@logouts');
 Route::get('/products/{url}','HomesController@products');
 Route::match(['GET','POST'],'forgot-password','HomesController@forgotPassword');
@@ -112,3 +117,7 @@ Route::get('paywithpaypal', array('as' => 'addmoney.paywithpaypal','uses' => 'Ad
 Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
 
 Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus',));
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

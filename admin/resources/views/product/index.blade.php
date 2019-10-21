@@ -3,8 +3,8 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="pull-right">
-				<div style="position: absolute; margin-right: 20px">
-				<a  href="{{route('product.create')}}" style="position: absolute;margin-left: -203px; top: 100px">Create Product</a>
+				<div class="create_div">
+				<a  href="{{route('product.create')}}" class="create_link">Create Product</a>
 				</div>
 			</div>
 		</div>
@@ -14,7 +14,7 @@
 			<p>{{ $message }}</p>
 		</div>
 	@endif
-	<div style="position: absolute;top: 191px;">
+	<div class="table_div">
 		<table class="table table-bordered" style="width: 100%">
 			<tr>
 

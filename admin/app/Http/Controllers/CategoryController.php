@@ -20,17 +20,18 @@ class CategoryController extends Controller
 */
 public function index()
 {
-    $category= Category::latest()->paginate();
-    $categories=DB::table('category as c1')
-    ->select('c1.id','c1.name','c1.status','c1.parent_id','c2.name as parent_name')
-    ->join('category as c2','c1.parent_id','=','c2.id')
+    // $categorys= Category::->paginate(2);
+    $categories=Category::select('category.id','category.name','category.status','category.parent_id','c2.name as parent_name')
+    ->leftjoin('category as c2','category.parent_id','=','c2.id')
 
-    ->get();
+    ->paginate(4);
+    
+    // $categorys=Category::select('*')->where('parent_id','=','0')->get();
+    // // echo "<pre>";
+    // // print_r($categorys);
+    // // die;
 
-    $categorys=Category::select('*')->where('parent_id','=','0')->get();
-
-
-    return view('category.index',compact('categories','categorys','category','category'));
+    return view('category.index',compact('categories','categorys','categorys','category'));
 
 }
 

@@ -38,7 +38,7 @@ class ChartController extends Controller
 					->get();
 		$chart = Charts::database($coupon, 'bar', 'highcharts')
 					->title("Coupon Used")
-					->elementLabel("Total Users")
+					->elementLabel("Total Coupons")
 					->dimensions(700, 500)
 					->groupByMonth(date('Y'), true);
 		return view('reports.coupons',compact('chart'));

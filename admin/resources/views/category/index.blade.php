@@ -18,37 +18,35 @@
 	<table class="table table-bordered" >
 		<tr>
 			<th >Category Name</th>
-			<th >Parent Id</th>
+			<th >Parent Name</th>
 			<th >status</th>
 			<th width="200px">ACTION</th>
 		</tr>
-		@foreach($categorys as $categorys)
-			<tr>
-				<td>{{$categorys->name}}</td>
-				<td>{{$categorys->name}}</td>
-				<td>{{$categorys->status}}</td>
-				<td>
-					<a class="btn btn-xs btn-info" href="{{route('category.edit',$categorys->id)}}">edit</a>
-					{!! Form::open(['method'=>'DELETE','route'=>['category.destroy',$categorys->id],'style'=>'display:inline'])!!}
-					{!! Form::submit('Delete',['class'=>'btn btn-xs btn-danger']) !!}
-					{!! Form::close()!!}
-				</td>
-			</tr>
-		@endforeach
-		@foreach($categories as $categorys)
-			<tr>
-				<td>{{$categorys->name}}</td>
-				<td>{{$categorys->parent_name}}</td>
-				<td>{{$categorys->status}}</td>
-				<td>
-					<a class="btn btn-xs btn-info" href="{{route('category.edit',$categorys->id)}}">edit</a>
-					{!! Form::open(['method'=>'DELETE','route'=>['category.destroy',$categorys->id],'style'=>'display:inline'])!!}
-					{!! Form::submit('Delete',['class'=>'btn btn-xs btn-danger']) !!}
-					{!! Form::close()!!}
-				</td>
-			</tr>
-		@endforeach
+		@foreach ($categories as $category)
+      <tr>
+        
+        <td>{{ $category->name }}</td>
+        <td>
+			@if($category->parent_id==0)
+				{{ $category ->name}}
+			@else
+			{{ $category->parent_name }}
+			@endif
+        </td>
+        <td>{{ $category->status }}</td>
+        <td>
+			<a class="btn btn-xs btn-info" href="{{ route('category.edit',$category->id) }}">Edit</a>
+			{!! Form::open(['method' => 'DELETE','route' => ['category.destroy', $category->id],'id' => 'FormDeleteTime','style'=>'display:inline']) !!}
+
+			{!! Form::submit('Delete', ['class' => 'btn  btn-xs btn-danger']) !!}
+
+			{!! Form::close() !!}
+          
+        </td>
+      </tr>
+     
+    @endforeach
 	</table>
-	{!! $category->links() !!}
+	{{$categories->links()}}
 </div>
 @endsection

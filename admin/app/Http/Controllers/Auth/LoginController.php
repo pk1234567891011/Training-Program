@@ -36,10 +36,19 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-     
+    //  public function login(Request $request){
+    //      return redirect('homes');
+    //  }
         // Set Auth Details
 
-        
+        public function login(Request $request)
+        {
+          $user = User::where('email', $request->email)
+                      ->where('password',md5($request->password))
+                      ->first();
+            Auth::login($user);
+            return redirect('homes');
+        } 
         // Redirect home page
       
 }

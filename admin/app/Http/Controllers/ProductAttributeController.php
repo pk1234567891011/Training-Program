@@ -47,39 +47,34 @@ class ProductAttributeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:product_attributes,name|regex:/^[a-zA-Z]+$/',
         ]);
-        $rules = [];
-
-        foreach ($request->input('values') as $key => $value) {
-            $rules["values.{$key}"] = 'required';
-        }
+       
 
         $user = auth()->user();
         $user_id = $user->id;
+        $value = $request->input('values');
+           
+        foreach ($value as $val) {
+            if(empty($val)){
+                return redirect()->back()->with('flash_message_error', 'Attrribute value cannot  empty'); 
 
+                }
+            }
         $product_attributes = new Product_attributes();
         $product_attributes->created_by = $user_id;
         $product_attributes->name = $request->name;
         $product_attributes->save();
-        $product_attributes = DB::table('product_attributes')
-            ->select('*')
-            ->orderBy('id', 'DESC')->first();
-        $validator = Validator::make($request->all(), $rules);
+        foreach ($value as $val) {
+            $object = new Product_attribute_values();
+            $object->product_attribute_id = $product_attributes->id;
+            $object->attribute_value = $val;
+            $object->created_by = $user->id;
+            $object->save();
+                
 
-        if ($validator->passes()) {
-            if ($request->input('values')) {
-                $value = $request->input('values');
-                foreach ($value as $val) {
-                    $object = new Product_attribute_values();
-                    $object->product_attribute_id = $product_attributes->id;
-                    $object->attribute_value = $val;
-                    $object->created_by = $user->id;
-                    $object->save();
-                }
-
-            }
-        }
+        } 
+        
       
         return redirect()->route('product_attributes.index')->with('success', 'Attrribute created successfully');
 
@@ -126,8 +121,7 @@ class ProductAttributeController extends Controller
      */
     public function destroy($id)
     {
-        $attribute_name = \DB::table('product_attributes')->where('id', $id)->first();
-        $attribute_values = \DB::table('product_attribute_values')->where('product_attribute_id', $id)->get();
+        $attribute_values = Product_attribute_values::where('product_attribute_id', $id)->get();
         Product_attributes_assoc::where('product_attribute_id',$id)->delete();
         Product_attribute_values::whereIn('id', $attribute_values->pluck('id'))->delete();
         Product_attributes::find($id)->delete();
