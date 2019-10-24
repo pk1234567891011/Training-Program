@@ -25,9 +25,9 @@ class DetailsController extends Controller
     {
         //
     }
-    public function prod($id = null){
+    public function prod($id = null)
+    {
         $productDetails=Product::where('id',$id)->first();
-       
         return view('Eshopper.details')->with(compact('productDetails'));
         }
     /**

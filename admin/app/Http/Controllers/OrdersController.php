@@ -84,15 +84,6 @@ class OrdersController extends Controller
         $user=Users::where('id', $user_details->user_id)->first();
         $email=$user->email;
         $mytime =date("Y-m-d h:i:s a", time());
-             
-             
-            //  echo "<pre>";
-            //   print_r($productDetails);
-            //  die;
-            // $order=UserOrder::where('user_id',Auth::User()->id)->first();
-            // $user_details=UserOrder::where('user_id',Auth::User()->id)->get();
-            
-            // $product=UserOrder::has('name')->get();
         $messageData=[
 
             'productDetails'=>$productDetails,

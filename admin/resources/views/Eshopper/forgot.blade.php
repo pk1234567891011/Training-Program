@@ -1,14 +1,14 @@
 @extends('frontend.without_login_home')
 @section('content')
 	@if($message=Session::get('success'))
-	<div class="alert alert-success">
-		<p>{{ $message }}</p>
-	</div>
+		<div class="alert alert-success">
+			<p>{{ $message }}</p>
+		</div>
 	@endif
 	@if(Session::has('flash_message_error'))
-	<div class="alert alert-error">
-		<p>{!! session('flash_message_error') !!}</p>
-	</div>
+		<div class="alert alert-error">
+			<p>{!! session('flash_message_error') !!}</p>
+		</div>
 	@endif
 	@if(isset(Auth::user()->email))
 		<script>window.location="/login-register/successlogin";</script>

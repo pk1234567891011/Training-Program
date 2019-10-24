@@ -13,4 +13,3 @@ class OrderDetails extends Model
         return $this->belongsTo('App\UserOrder');
     }
 }
-// <input type="text" name="country" value="{{$getCountryCode->country_code}}">

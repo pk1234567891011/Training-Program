@@ -32,7 +32,6 @@
 						@endforeach
 					</td>
 					<td>
-						<!-- <a class="btn btn-xs btn-info" href="{{route('product_attributes.edit',$attributes->id)}}">edit</a> -->
 						{!! Form::open(['method'=>'DELETE','route'=>['product_attributes.destroy',$attributes->id],'style'=>'display:inline'])!!}
 						{!! Form::submit('Delete',['class'=>'btn btn-xs btn-danger']) !!}
 						{!! Form::close()!!}

@@ -21,9 +21,9 @@ class ChartController extends Controller
 					->dimensions(700, 500)
 					->groupByMonth(date('Y'), true);
         return view('reports.users',compact('chart'));
-        // composer require consoletvs/charts:5.*
 	}
-	public function sales(){
+	public function sales()
+	{
 		$sales= OrderDetails::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
 					->get();
 		$chart = Charts::database($sales, 'bar', 'highcharts')
@@ -33,7 +33,8 @@ class ChartController extends Controller
 					->groupByMonth(date('Y'), true);
 		return view('reports.sales',compact('chart'));
 	}
-	public function couponused(){
+	public function couponused()
+	{
 		$coupon= CouponUsed::where(DB::raw("(DATE_FORMAT(updated_at,'%Y'))"),date('Y'))
 					->get();
 		$chart = Charts::database($coupon, 'bar', 'highcharts')

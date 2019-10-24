@@ -14,8 +14,7 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-       //$configurations=DB::table('configuration')
-             //->latest()->paginate(2);
+       
         $configuration= Configuration::latest()->paginate(2);
            
         return view('configuration.index',compact('configuration'))->with('i',(request()->input('page',1)-1)*2);

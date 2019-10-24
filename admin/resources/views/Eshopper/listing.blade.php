@@ -1,5 +1,4 @@
 
-
 @extends('frontend.home')
 @section('content')
 	@include('Eshopper.slider')
@@ -81,8 +80,8 @@
 											</div>
 										<div class="choose">
 											<ul class="nav nav-pills nav-justified">
-												<!-- <li><a href="{{url('prod/'.$products->id )}}"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-												<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li> -->
+												
+												
 											</ul>
 										</div>
 									</div>
@@ -98,46 +97,45 @@
 					
 							@else
 							
-							@foreach($categories as $products)
-								<div class="col-sm-4">
-								
-				
-									<div class="product-image-wrapper">
+								@foreach($categories as $products)
+									<div class="col-sm-4">
 									
-										<div class="single-products">
-												
-											<div class="productinfo text-center">
-												<img src="{{ URL::to('/') }}/products/{{ $products->image }}" height="100px">
 					
-												<h2>INR {{$products->price}}</h2>
-												<p>{{$products->name}}</p>
-												<a href="{{url('prod/'.$products->id )}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>View Details</a>
-											</div>
-											<div class="product-overlay">
-												<div class="overlay-content">
+										<div class="product-image-wrapper">
+										
+											<div class="single-products">
+													
+												<div class="productinfo text-center">
+													<img src="{{ URL::to('/') }}/products/{{ $products->image }}" height="100px">
+						
 													<h2>INR {{$products->price}}</h2>
 													<p>{{$products->name}}</p>
 													<a href="{{url('prod/'.$products->id )}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>View Details</a>
 												</div>
+												<div class="product-overlay">
+													<div class="overlay-content">
+														<h2>INR {{$products->price}}</h2>
+														<p>{{$products->name}}</p>
+														<a href="{{url('prod/'.$products->id )}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>View Details</a>
+													</div>
+												</div>
+											</div>
+											<div class="choose">
+												<ul class="nav nav-pills nav-justified">
+													
+												</ul>
 											</div>
 										</div>
-										<div class="choose">
-											<ul class="nav nav-pills nav-justified">
-												<!-- <li><a href="{{url('prod/'.$products->id )}}"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-												<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li> -->
-											</ul>
-										</div>
 									</div>
-								</div>
+								
+								@endforeach
+						
 							
-							@endforeach
+							@endif
+					</div>
 					
-							
-							</div>
-						@endif
-    			</div>
-				
- 		 	</div>
+				</div>
+			</div>
 		</div>
 	</section>
 @endsection

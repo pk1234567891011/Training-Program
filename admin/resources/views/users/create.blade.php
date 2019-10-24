@@ -17,31 +17,31 @@
             <div class="col-xs-12">
                 <div class="form-group">
                     <strong>Firstname :</strong>
-                    {!! Form::text('firstname',null,['placeholder'=>'FirstName','class'=>'form-control'])!!}
+                    <input type="text" name="firstname" placeholder="FirstName" class="form-control">
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <strong>Lastname :</strong>
-                    {!! Form::text('lastname',null,['placeholder'=>'LastName','class'=>'form-control'])!!}
+                    <input type="text" name="lastname" placeholder="LastName" class="form-control">
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
                     <strong>Email :</strong>
-                    {!! Form::text('email',null,['placeholder'=>'Email','class'=>'form-control'])!!}
+                    <input type="email" name="email" placeholder="Email" class="form-control">
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <strong>Password :</strong>
-                    {!! Form::password('password',null,['placeholder'=>'Password','class'=>'form-control','id' => 'password'])!!}
+                    <strong>Password Confirmation :</strong>
+                    <input type="password" class="form-control" name="password" required>
                 </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">
-                    <strong>Confirm Password :</strong>
-                    {!! Form::password('password_confirmation',null,['placeholder'=>'Confirm-Password','class'=>'form-control','id' => 'password_confirmation'])!!}
+                    <strong>Password Confirmation :</strong>
+                    <input  type="password" class="form-control" name="password_confirmation" required>
                 </div>
             </div>
             <div class="col-xs-12">

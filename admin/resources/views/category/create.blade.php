@@ -1,7 +1,7 @@
 
 @extends('admin.admin_template')
 @section('content')
- <form method="post" action="{{url('category')}}">
+<form method="post" action="{{url('category')}}">
     {{csrf_field()}}
     @if(count($errors)>0)
         <div class="alert alert-danger">

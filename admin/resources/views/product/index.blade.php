@@ -51,4 +51,5 @@
 			@endforeach
 		</table>
 		{!! $product->links() !!}
+	</div>
 @endsection

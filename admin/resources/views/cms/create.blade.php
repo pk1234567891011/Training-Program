@@ -3,16 +3,16 @@
 
 <form method="post" action="{{url('cms')}}" enctype="multipart/form-data">
 {{csrf_field()}}
-@if(count($errors)>0)
-<div class="alert alert-danger">
-<strong>Whoops!!!</strong> There are some problems with your inputs.</br>
-<ul>
-@foreach($errors->all() as $error)
-<li>{{ $error}}</li>
-@endforeach
-</ul>
-</div>
-@endif
+    @if(count($errors)>0)
+        <div class="alert alert-danger">
+            <strong>Whoops!!!</strong> There are some problems with your inputs.</br>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 <div class="row">
     <div class="col-xs-12">
         <div class="form-group">

@@ -84,7 +84,8 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {  $coupon = Coupon::find($id);
+    {   
+        $coupon = Coupon::find($id);
         $request->validate([
             'code' => 'required',
             'percent_off' => 'required',

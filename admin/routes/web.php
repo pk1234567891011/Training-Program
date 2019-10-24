@@ -50,25 +50,18 @@ Route::group(['middleware'=>['adminlogin']],function(){
     Route::resource('configuration','ConfigurationController');
     Route::resource('category','CategoryController');
     Route::resource('product','ProductController');
-
     Route::resource('product_attributes','ProductAttributeController');
-    // Route::post('product/insert', 'ProductController@insert')->name('product.insert');
-    // Route::resource('product_images','Product_ImageController');
-    //Route::get('product/create/{id}', 'ProductController@getValues');
     Route::get('myform/ajax/{id}',array('as'=>'myform.ajax','uses'=>'ProductController@myformAjax'));
     Route::resource('coupon','CouponController');
     
 });
-// Route::view('news','news');
-//Route::post('trial','NewsletterController@news');
+
 Route::match(['GET','POST'],'trial','NewsletterController@news');
 Route::get('usersregistered', 'ChartController@index');
 Route::get('SalesReport', 'ChartController@sales');
 Route::get('CouponUsed', 'ChartController@couponused');
 Route::get('logout', 'MainController@logout');
-// Route::view('Eshopper','frontend.home');
 Route::resource('homes','HomesController');
-//Route::get('/home/{name}','HomesController@products');
 Route::resource('login','HomesController');
 Route::get('/login', 'HomeController@login')->name('login');
 Route::match(['GET','POST'],'/login-register','HomesController@register');

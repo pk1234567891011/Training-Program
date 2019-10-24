@@ -37,13 +37,13 @@
 			<div class="col-xs-12">
 				<div class="form-group">
 					<label for="password">Password:</label>
-					<input type="password" class="form-control" name="password" value="{{$users->password}}">
+                    <input type="password" class="form-control" name="password" value="{{$users->password}}" required>
 				</div>
 			</div>
 			<div class="col-xs-12">
 				<div class="form-group">
-					<label for="confirmpassword">Confirm-Password:</label>
-					<input type="password" class="form-control" name="confirmpassword" value="{{$users->password}}">
+					<label for="confirmpassword">Confirm Password:</label>
+                    <input  type="password" class="form-control" name="password_confirmation" value="{{$users->password}}" required>
 				</div>
 			</div>
 			<div class="col-xs-12">

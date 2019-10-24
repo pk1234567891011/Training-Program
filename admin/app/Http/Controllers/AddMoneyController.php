@@ -159,5 +159,4 @@ class AddMoneyController extends Controller
         \Session::put('error','Payment failed');
         return Redirect::route('addmoney.paywithpaypal');
     }
-  }
-//   readonly="readonly"  value="{{ Session::get('grand_total') }}"
+}

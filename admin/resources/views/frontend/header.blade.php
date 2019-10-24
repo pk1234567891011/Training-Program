@@ -1,7 +1,5 @@
 <?php
 use App\Http\Controllers\Controller; 
-use App\Cart;
-// $cartCount=Cart::cartCount();
 $mainCategories = Controller::mainCategories();
 ?>
 <header id="header"><!--header-->
@@ -96,17 +94,13 @@ $mainCategories = Controller::mainCategories();
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
 									@foreach($mainCategories as $cat)
-                                        <li><a href="{{asset('/products/'.$cat->name)}}">{{$cat->name}}</a></li>
+										@if($cat->children->count())
+											<li><a href="{{asset('/products/'.$cat->name)}}">{{$cat->name}}</a></li>
+										@endif
 									@endforeach
                                     </ul>
                                 </li> 
-								<!-- <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li>  -->
-								<!-- <li><a href="404.html">404</a></li> -->
+							
 								<li><a href="{{url('/page/contact')}}">Contact</a></li>
 							</ul>
 						</div>

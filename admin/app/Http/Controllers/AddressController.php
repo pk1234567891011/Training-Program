@@ -25,7 +25,8 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {   $countries=Country::get();
+    {   
+        $countries=Country::get();
         $user_id=Auth::user()->id;
         $userDetails=Users::find($user_id);
         return view('address.create',compact('countries','userDetails'));
@@ -58,7 +59,8 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   $address = Address::find($id);
+    {   
+        $address = Address::find($id);
         $countries=Country::all();
         $user_id=Auth::user()->id;
         $userInfo=Users::where('id',$user_id)->first();  
@@ -73,7 +75,8 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   $request->validate([
+    {   
+        $request->validate([
             'address'=>'required',
             'city'=>'required',
             'state'=>'required',
@@ -97,7 +100,6 @@ class AddressController extends Controller
         $address->pincode=$data['pincode'];
         $address->mobile=$data['mobile'];
         $address->save();  
-            
         return redirect('account')->with('flash_message_success', 'Address added successfully');
 
         
@@ -116,29 +118,30 @@ class AddressController extends Controller
         return redirect('account')->with('flash_message_success','Address deleted successfully');
     }
     public function store(Request $request)
-    {   $user_id=Auth::user()->id;
+    {   
+        $user_id=Auth::user()->id;
         if($request->isMethod('post')){
-        $request->validate([
-            'address'=>'required',
-            'city'=>'required',
-            'state'=>'required',
-            'country'=>'required',
-            'pincode'=>'required|regex:/\b\d{6}\b/',
-            'mobile'=>'required|numeric|regex:/\d{10}/',
+            $request->validate([
+                'address'=>'required',
+                'city'=>'required',
+                'state'=>'required',
+                'country'=>'required',
+                'pincode'=>'required|regex:/\b\d{6}\b/',
+                'mobile'=>'required|numeric|regex:/\d{10}/',
 
-        ]);
-        $data=$request->all();
-        $address=new Address();
-        $address->userId=$user_id;
-        $address->address=$data['address'];
-        $address->city=$data['city'];
-        $address->state=$data['state'];
-        $address->country=$data['country'];
-        $address->pincode=$data['pincode'];
-        $address->mobile=$data['mobile'];
-        $address->save();
+            ]);
+            $data=$request->all();
+            $address=new Address();
+            $address->userId=$user_id;
+            $address->address=$data['address'];
+            $address->city=$data['city'];
+            $address->state=$data['state'];
+            $address->country=$data['country'];
+            $address->pincode=$data['pincode'];
+            $address->mobile=$data['mobile'];
+            $address->save();
             
-        return redirect('account')->with('flash_message_success', 'Address updated successfully');
+             return redirect('account')->with('flash_message_success', 'Address updated successfully');
 
         }
     }

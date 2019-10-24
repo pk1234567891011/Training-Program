@@ -78,7 +78,7 @@
                                     Paywith Paypal
 
                                 </button> 
-                                <a href="url('homes')" class="btn btn-primary">Back To Home</a>           
+                                <a href="{{url('homes')}}" class="btn btn-primary">Back To Home</a>           
                           
                             </div>
 

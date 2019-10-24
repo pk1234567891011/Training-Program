@@ -75,12 +75,12 @@
 			</div>
 		</div>
 	</section><!--/form-->
-	<script src="{{ asset ('jss/js/jquery.js')}}"></script>
-	<script src="{{ asset ('jss/js/bootstrap.min.js')}}"></script>
-	<script src="{{ asset ('jss/js/jquery.scrollUp.min.js')}}"></script>
-	<script src="{{ asset ('jss/js/price-range.js')}}"></script>
-    <script src="{{ asset ('jss/js/jquery.prettyPhoto.js')}}"></script>
-    <script src="{{ asset ('jss/js/main.js')}}"></script>
-    <script src="{{ asset ('jss/js/jquery.validate.js')}}"></script>
-    <script src="{{ asset ('jss/js/main.js')}}"></script>
+<script src="{{ asset ('jss/js/jquery.js')}}"></script>
+<script src="{{ asset ('jss/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset ('jss/js/jquery.scrollUp.min.js')}}"></script>
+<script src="{{ asset ('jss/js/price-range.js')}}"></script>
+<script src="{{ asset ('jss/js/jquery.prettyPhoto.js')}}"></script>
+<script src="{{ asset ('jss/js/main.js')}}"></script>
+<script src="{{ asset ('jss/js/jquery.validate.js')}}"></script>
+<script src="{{ asset ('jss/js/main.js')}}"></script>
 @endsection

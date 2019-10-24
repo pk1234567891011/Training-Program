@@ -27,9 +27,9 @@
                 <tr>
                     <td>{{$news->email}}</td>
                     @if($news->status==1)
-                    <td><a href="{{url('update-newsletter-status/'.$news->id.'/0')}}"><span>Active</span></a></td>
+                        <td><a href="{{url('update-newsletter-status/'.$news->id.'/0')}}"><span>Active</span></a></td>
                     @else
-                    <td><a href="{{url('update-newsletter-status/'.$news->id.'/1')}}"><span>InActive</span></a></td>
+                        <td><a href="{{url('update-newsletter-status/'.$news->id.'/1')}}"><span>InActive</span></a></td>
                     @endif
                     <td><a class="btn btn-xs btn-danger" href="{{url('delete-newsletter-email/'.$news->id)}}"><span>Delete</span></a></td>
 

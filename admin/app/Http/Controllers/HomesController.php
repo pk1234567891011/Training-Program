@@ -40,16 +40,15 @@ class HomesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function slider(){
+    public function slider()
+    {
         $sliders = Banner::where('status','active')->orderby('id', 'desc')->get();
         return view('Eshopper.slider', compact('sliders'));
     }
     public function index()
-    {   $category = Category::with('children')->get();
+    {   
+        $category = Category::with('children')->get();
         $sliders = Banner::where('status','active')->orderby('id', 'desc')->get();
-        // echo "<pre>";
-        // print_r($sliders);
-        // die;
         $images = Product_images::where('status', 'active')->get();
         $productsAll = Product::has('imgs')->orderBy('id','DESC')->paginate(2);
         
@@ -215,29 +214,26 @@ class HomesController extends Controller
 
     public function callback()
     {
-        
+        $googleUser = Socialite::driver('google')->stateless()->user();
+        $existUser = Users::where('email',$googleUser->email)->first();
             
-        
-            $googleUser = Socialite::driver('google')->stateless()->user();
-            $existUser = Users::where('email',$googleUser->email)->first();
-            
-            if($existUser) {
-                Auth::loginUsingId($existUser->id);
-                Session::put('frontSession', $googleUser->email);
+        if($existUser) {
+            Auth::loginUsingId($existUser->id);
+            Session::put('frontSession', $googleUser->email);
 
-            }
-            else {
-                   $user = new Users;
-                   $user->name= $facebookUser->name;
-                   $user->email= $facebookUser->email;
-                   $user->password= bcrypt(123456789);
-                   $user->status= "active";
-                   $user->role_id=5;
-                   $user->save();
-                Auth::loginUsingId($user->id);
-                Session::put('frontSession',$googleUser->email);
-            }
-            return redirect()->to('/homes');
+        }
+        else {
+            $user = new Users;
+            $user->name= $facebookUser->name;
+            $user->email= $facebookUser->email;
+            $user->password= bcrypt(123456789);
+            $user->status= "active";
+            $user->role_id=5;
+            $user->save();
+            Auth::loginUsingId($user->id);
+            Session::put('frontSession',$googleUser->email);
+        }
+        return redirect()->to('/homes');
        
     }
     public function logouts()
@@ -249,12 +245,13 @@ class HomesController extends Controller
         return redirect('login-register');
     }
     public function products($url = null)
-    {   $categoryDetails = Category::where(['name' => $url])->first();
+    {   
+        $categoryDetails = Category::where(['name' => $url])->first();
         $categoryCount = Category::where(['name' => $url])->count();
         if ($categoryCount == 0) {
             abort(404);
         }
-        $sliders = Banner::orderby('id', 'desc')->get();
+        $sliders = Banner::where('status','active')->orderby('id', 'desc')->get();
         
         if ($categoryDetails->parent_id == 0) {
             $subCategories = Category::where(['parent_id' => $categoryDetails->id])->get();
@@ -264,8 +261,6 @@ class HomesController extends Controller
                 $cat_ids[]= $subCat->id . ",";
             }
             $categories=Product_Categories::whereIn('category_id', $cat_ids)->orderBy('id','DESC')->paginate(2);
-            
-           
             foreach ($categories as $key => $product) {
                 $productDetail = Product::where('id', $product->product_id)->first();
                 $image = Product_images::where('product_id', $productDetail->id)->first();
@@ -275,16 +270,11 @@ class HomesController extends Controller
             }
          
             $category = Category::with('children')->get();
-
-            
-
         } 
-        else {
+        else{
           
             $productCat = Product_categories::where(['category_id' => $categoryDetails->id])->get();
-
             $productsAll = Product::whereIn('id', $productCat->pluck('product_id'))->orderBy('id','DESC')->paginate(2);
-
             $category = Category::with('children')->get();
 
         }
@@ -297,39 +287,24 @@ class HomesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $user_id = Auth::user()->id;
-    //     echo $user_id;
-    //     exit();
-    // }
+ 
     public function prod($id)
     {
         $productDetails = Product::where('id', $id)->first();
          
         $category = Category::with('children')->get();
         $sliders = Banner::orderby('id', 'desc')->paginate(10);
-        
-        //$recommended=Product::has('imgs')->where('id','!=',$productDetails->id)->get();
-        
-        //$product_attributes_asso = Product_attributes_assoc::where('product_id', $productDetails->id)->first();
-       // $product_attributes = Product_attributes::where('id', $product_attributes_asso->product_attribute_id)->first();
-       // $product_attribute_value = Product_attribute_values::where('product_attribute_id', $product_attributes->id)->first();
 
-        $productsAll = Product::has('imgs')
-            ->get();
+        $productsAll = Product::has('imgs')->get();
         $product_image = Product_images::where('product_id', $productDetails->id)->first();
-
-       
-
         return view('Eshopper.details')->with(compact('category', 'productDetails', 'product_image', 'product_attributes', 'product_attribute_value','recommended'));
     }
     public function account()
-    {   $user_id = Auth::user()->id;
+    {   
+        $user_id = Auth::user()->id;
         $add = Address::where('userId', $user_id)->get();
         $paginate = Address::latest()->paginate(15);
         $userInfo = Users::where('id', $user_id)->first();
-
         return view('Eshopper.account', compact('add', 'userInfo', 'paginate'));
     }
     /**
@@ -467,13 +442,15 @@ class HomesController extends Controller
         return view('Eshopper.wishlist', compact('userWishlist'));
     }
     public function deleteCartProduct($id)
-    {   Session::forget('CouponAmount');
+    {   
+        Session::forget('CouponAmount');
         Session::forget('CouponCode');
         Cart::where('id', $id)->delete();
         return redirect('cart')->with('flash_message_success', 'Product has been delete from cart|');
     }
     public function deleteWishlistProduct($id)
-    {   Session::forget('CouponAmount');
+    {   
+        Session::forget('CouponAmount');
         Session::forget('CouponCode');
         wishlist::where('id', $id)->delete();
         return redirect('wishlist')->with('flash_message_success', 'Product has been delete from wishlist|');
@@ -577,7 +554,8 @@ class HomesController extends Controller
 
         }
     }
-    public function contact(Request $request){
+    public function contact(Request $request)
+    {
         if($request->isMethod('post')){
             
             $request->validate([
@@ -671,7 +649,8 @@ class HomesController extends Controller
        }
        return view('Eshopper.checkout',compact('userAddress','userDetails','countries','shippingDetails'));
     }
-    public function orderReview(){
+    public function orderReview()
+    {
         $user_id=Auth::User()->id;
        
         $user_email=Auth::User()->email;
@@ -688,7 +667,8 @@ class HomesController extends Controller
     
         return view('Eshopper.order_review',compact('userAddress','userDetails','shippingDetails','userCart'));
     }
-    public function placeOrder(Request $request){
+    public function placeOrder(Request $request)
+    {
         if($request->isMethod('post'))
         $data=$request->all();
        
@@ -742,16 +722,8 @@ class HomesController extends Controller
             $productDetails=UserOrder::with('orders')->where('id',$order_id)->first();
             $productDetails=json_decode(json_encode($productDetails),true);
             $user_addresss=Address::where('userId', $user_id)->first();
-             $mytime =date("Y-m-d h:i:s a", time());
-             
-             
-            //  echo "<pre>";
-            //   print_r($productDetails);
-            //  die;
-            // $order=UserOrder::where('user_id',Auth::User()->id)->first();
-            // $user_details=UserOrder::where('user_id',Auth::User()->id)->get();
+            $mytime =date("Y-m-d h:i:s a", time());
             
-            // $product=UserOrder::has('name')->get();
             $messageData=[
                 'email'=>$user_email,
                 'productDetails'=>$productDetails,
@@ -765,34 +737,42 @@ class HomesController extends Controller
             });
             return redirect('thanks');
         }
-       else{
-        return redirect('paywithpaypal');
-       }
+        else{
+            return redirect('paywithpaypal');
+        }
         
     }
-    public function thanks(Request $request){
+    public function thanks(Request $request)
+    {
         $user_email=Auth::User()->email;
         $userCart = Cart::where('user_email', $user_email)->delete();
         return view("orders.thanks",compact('$user_details','$order_details','$product'));
     }
 
-    public function userOrders(){
+    public function userOrders()
+    {
         $user_id=Auth::User()->id;
         $orders=UserOrder::with('orders')->where('user_id',$user_id)->orderBy('id','DESC')->get();
        
         return view('orders.users_orders',compact('orders'));
     }
-    public function userOrderDetails($order_id){
+
+    public function userOrderDetails($order_id)
+    {
         $user_id=Auth::User()->id;
         $orderDetails=UserOrder::with('orders')->where('id',$order_id)->first();
-    
         return view('orders.user_order_details',compact('orderDetails'));
 
     }
-    public function track(){
+
+    public function track()
+    {
+        
         return view('Eshopper.track');
     }
-   public function trackOrder(Request $request){
+
+    public function trackOrder(Request $request)
+    {
        $request->validate([
         'order_id'=>'required|numeric',
         'email'=>'required'
@@ -805,18 +785,17 @@ class HomesController extends Controller
        $order_details=UserOrder::where('id',$order_id)->first();
        if(empty($order_details)){
           return redirect()->back()->with('flash_message_error','Invalid Order id');
-       }
+        }
        else{
-       $user_details=Users::where('id',$order_details->user_id)->first();
-       if($user_details->email==$data['email']){
-          return view('Eshopper.track_order',compact('order_details'));
-       }
-       else{
-        return redirect()->back()->with('flash_message_error','Invalid Order id or email');
-       }
+            $user_details=Users::where('id',$order_details->user_id)->first();
+            if($user_details->email==$data['email']){
+                return view('Eshopper.track_order',compact('order_details'));
+            }
+            else{
+                return redirect()->back()->with('flash_message_error','Invalid Order id or email');
+            }
+        }
     }
-      // return redirect('/track_details');
-   }
     /**
      * Show the form for editing the specified resource.
      *

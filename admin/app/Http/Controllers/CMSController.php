@@ -77,7 +77,7 @@ class CMSController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-        {$request->validate([
+    {   $request->validate([
             'title'=>'required',
             'url'=>'required',
             'description'=>'required',
@@ -86,7 +86,9 @@ class CMSController extends Controller
         cms::find($id)->update($request->all());
         return redirect('cms')->with('success', 'Cms updated successfully');;
     }
-    public function cmsPage($url){
+
+    public function cmsPage($url)
+    {
         $cmsCount=cms::where(['url'=>$url,'status'=>1])->count();
         if($cmsCount>0){
             $cms_details=cms::where('url',$url)->first();

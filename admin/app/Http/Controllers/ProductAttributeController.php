@@ -20,10 +20,6 @@ class ProductAttributeController extends Controller
     public function index()
     {
         $product_attributes = Product_attributes::latest()->paginate(2);
-
-       // $multiple = Product_attributes::has('parent')->get();
-      // $product_value=Product_attribute_values::all();
-
         return view('product_attributes.index', compact('product_attributes', 'product_value'));
     }
 
@@ -59,8 +55,8 @@ class ProductAttributeController extends Controller
             if(empty($val)){
                 return redirect()->back()->with('flash_message_error', 'Attrribute value cannot  empty'); 
 
-                }
             }
+        }
         $product_attributes = new Product_attributes();
         $product_attributes->created_by = $user_id;
         $product_attributes->name = $request->name;
