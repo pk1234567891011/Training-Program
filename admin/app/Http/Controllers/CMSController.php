@@ -17,6 +17,14 @@ class CMSController extends Controller
         return view('cms.index',compact('cms_details'));
     }
 
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $cms_details=cms::where('title','like','%'.$search.'%')->paginate(2);
+        return view('cms.index',compact('cms_details'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

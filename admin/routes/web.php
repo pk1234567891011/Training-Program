@@ -114,3 +114,19 @@ Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyControlle
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//backend search
+Route::get('/usersearch','UsersController@search');
+Route::get('/bannersearch','BannerController@search');
+Route::get('/categorysearch','CategoryController@search');
+Route::get('/productsearch','ProductController@search');
+Route::get('/attributesearch','ProductAttributeController@search');
+Route::get('/couponsearch','CouponController@search');
+Route::get('/tracksearch','OrdersController@search');
+Route::get('/contactsearch','ContactController@search');
+Route::get('/cmssearch','CMSController@search');
+Route::get('/customersearch','AdminOrderController@searchCustomer');
+Route::get('/orderdetailssearch','AdminOrderController@searchorderdetails');
+Route::get('/userordersearch','AdminOrderController@searchuserorder');
+//frontend search
+Route::get('/allsearch','HomesController@allsearch');
+

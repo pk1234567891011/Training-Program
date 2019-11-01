@@ -22,7 +22,13 @@ class ProductAttributeController extends Controller
         $product_attributes = Product_attributes::latest()->paginate(2);
         return view('product_attributes.index', compact('product_attributes', 'product_value'));
     }
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $product_attributes=Product_attributes::where('name','like','%'.$search.'%')->paginate(2);
+        return view('product_attributes.index',compact('product_attributes'));
 
+    }
     /**
      * Show the form for creating a new resource.
      *

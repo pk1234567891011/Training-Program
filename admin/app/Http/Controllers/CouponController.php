@@ -17,7 +17,13 @@ class CouponController extends Controller
         return view('coupon.index',compact('coupon'));
 
     }
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $coupon=Coupon::where('code','like','%'.$search.'%')->paginate(10);
+        return view('coupon.index',compact('coupon'));
 
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -52,8 +52,10 @@
         		</div>
         		<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
+					
 						@if($categoryDetails->parent_id!=0)
 							<h2 class="title text-center">{{$categoryDetails->name}}</h2>
+							
 							@foreach($productsAll as $products)
 								@foreach($products->imgs as $img)
 									<div class="col-sm-4">
@@ -96,7 +98,7 @@
 							</div>
 					
 							@else
-							
+							<h2 class="title text-center">{{$categoryDetails->name}}</h2>
 								@foreach($categories as $products)
 									<div class="col-sm-4">
 									
@@ -133,6 +135,8 @@
 							
 							@endif
 					</div>
+					
+					
 					
 				</div>
 			</div>

@@ -46,6 +46,13 @@ class UsersController extends Controller
         return view('users.create')->with('users', $roles);
     }
 
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $users=Users::where('firstname','like','%'.$search.'%')->paginate(10);
+        return view('users.index',compact('users'));
+
+    }
     /**
      * Store a newly created resource in storage.
      *

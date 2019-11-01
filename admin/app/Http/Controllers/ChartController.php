@@ -7,7 +7,7 @@ use App\Users;
 use DB;
 use App\OrderDetails;
 use Charts;
-use App\CouponUsed;
+use App\UserOrder;
 
 class ChartController extends Controller
 {
@@ -28,18 +28,22 @@ class ChartController extends Controller
 					->get();
 		$chart = Charts::database($sales, 'bar', 'highcharts')
 					->title("Monthly Product Sales")
-					->elementLabel("Total ordres")
+					->elementLabel("Total orders")
 					->dimensions(700, 500)
 					->groupByMonth(date('Y'), true);
 		return view('reports.sales',compact('chart'));
 	}
 	public function couponused()
 	{
-		$coupon= CouponUsed::where(DB::raw("(DATE_FORMAT(updated_at,'%Y'))"),date('Y'))
-					->get();
+		$coupon = UserOrder::where([
+			[DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y')],
+			['coupon_id','!=',NULL]
+	
+			])
+							->get();
 		$chart = Charts::database($coupon, 'bar', 'highcharts')
-					->title("Coupon Used")
-					->elementLabel("Total Coupons")
+					->title("Monthly Coupon Used")
+					->elementLabel("Total Coupons Used")
 					->dimensions(700, 500)
 					->groupByMonth(date('Y'), true);
 		return view('reports.coupons',compact('chart'));

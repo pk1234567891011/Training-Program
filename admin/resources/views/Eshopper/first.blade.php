@@ -53,9 +53,18 @@
         		</div>
         		<div class="col-sm-9 padding-right">
 					<div class="features_items">
-			
-						<h2 class="title text-center">ALL ITEMS</h2>
 					
+						<h2 class="title text-center">ALL ITEMS</h2>
+						<br>
+					    <div id="allproduct">
+							<form method="get" action="/allsearch">
+								<input type="text" placeholder="Search.." name="search">
+    							<button type="submit"><i class="fa fa-search"></i></button>
+							</form>
+						</div>
+						<br>
+						<br>
+						
 						@foreach($productsAll as $products)
 					    	@foreach($products->imgs as $img)
                         		<div class="col-sm-4">

@@ -26,9 +26,16 @@ class ProductController extends Controller
     {
         $product = Product::latest()->paginate(2);
         $multiple = Product::has('imgs')->get();
-        return view('product.index', compact('product', 'multiple'))->with('i', (request()->input('page', 1) - 1) * 2);
+        return view('product.index', compact('product', 'multiple'));
     }
+    public function search(Request $request){
+        $search=$request->search;
+        $multiple = Product::has('imgs')->get();
 
+        $product=Product::where('name','like','%'.$search.'%')->paginate(2);
+        return view('product.index', compact('product', 'multiple'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *

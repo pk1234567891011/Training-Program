@@ -17,7 +17,7 @@ class BannerController extends Controller
     public function index()
     {
         $banner=Banner::latest()->paginate(2);           
-        return view('banner.index',compact('banner'))->with('i',(request()->input('page',1)-1)*2);
+        return view('banner.index',compact('banner'));
     }
 
     /**
@@ -31,7 +31,13 @@ class BannerController extends Controller
         return view('banner.create');
                 
     }
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $banner=Banner::where('status','like','%'.$search.'%')->paginate(2);
+        return view('banner.index',compact('banner'));
 
+    }
     /**
      * Store a newly created resource in storage.
      *

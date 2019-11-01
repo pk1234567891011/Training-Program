@@ -19,7 +19,14 @@ class OrdersController extends Controller
         $order_details=UserOrder::latest()->paginate(2);;
         return view('orders.index',compact('order_details'));
     }
+    
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $order_details=UserOrder::where('id','like','%'.$search.'%')->paginate(2);
+        return view('orders.index',compact('order_details'));
 
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -16,7 +16,14 @@ class ContactController extends Controller
         $contact_details=Contact::latest()->paginate(10);
         return view('contact.index',compact('contact_details'));
     }
+    
+    public function search(Request $request){
+        $search=$request->search;
+        
+        $contact_details=Contact::where('name','like','%'.$search.'%')->paginate(10);
+        return view('contact.index',compact('contact_details'));
 
+    }
     /**
      * Show the form for creating a new resource.
      *

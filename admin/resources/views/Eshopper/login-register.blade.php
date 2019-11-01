@@ -47,12 +47,16 @@
 							<input id="email" name="email" type="email" placeholder="Email Address" required/>
 							<input id="password" name="password" type="password" placeholder="Password" />
 							
-							<button type="submit" class="btn btn-default">Login</button>
+							<button type="submit" class="btn btn-success">Login</button>
 							<p></p>
-                            <a href="{{ url('login/facebook') }}" class="btn btn-primary">Login With Facebook</a>
-                            <a href="{{ url('/redirect') }}" class="btn btn-danger">Login With Google</a>
-                               <br>
 							<a href="{{url('forgot-password')}}">Forgot password</a>
+
+                            <a href="{{ url('login/facebook') }}" class="btn btn-primary fa fa-facebook-square fa-2x" style="background-color: #2887ff">   Login With Facebook</a>
+							<p></p>
+							<a href="{{ url('/redirect') }}"  class="btn btn-primary"  style="background-color: #ff5c33"><i class="fa fa-google-plus-square" aria-hidden="true"></i>
+								Login With Google Plus
+							</a>
+                            <br>
 						</form>
 					</div><!--/login form-->
 				</div>

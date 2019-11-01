@@ -12,11 +12,11 @@
 
   @if($order_details->status=="pending") 
     @include('steps.pending')
-  @elseif($order_details->status=="Dispatched")
+  @elseif($order_details->status=="dispatched")
     @include('steps.dispatched')
-  @elseif($order_details->status=="Processing")
+  @elseif($order_details->status=="processing")
     @include('steps.processing')
-  @elseif($order_details->status=="Shipped")
+  @elseif($order_details->status=="shipped")
     @include('steps.shipped')
   @else
     @include('steps.delivered')

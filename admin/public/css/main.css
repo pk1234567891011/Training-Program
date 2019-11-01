@@ -63,6 +63,7 @@ a#scrollUp i{
 }
 
 
+
 /*************************
 *******Header CSS******
 **************************/
@@ -2592,3 +2593,28 @@ ol.progtrckr li.progtrckr-todo:before {
   height: 80px;
   width: 80px
 }
+#search{
+  position: absolute;
+
+  width: 140px;
+  top: 120px;
+  right: 140px;
+}
+#btnSearch{
+  position: absolute;
+  top: 105px;
+
+  width: 91px;
+
+  right: 49px;
+}
+#deleteAll{
+  margin-bottom: 10px;
+  background-color: #9fbc35;
+  border-color: #9fbc35;
+  }
+  #allproduct{
+    right: -40px;
+  position: absolute;
+  top: 22px;
+  }

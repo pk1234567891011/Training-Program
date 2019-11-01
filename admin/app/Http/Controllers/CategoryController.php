@@ -39,6 +39,18 @@ class CategoryController extends Controller
         return view('category.create',compact('category'));
     }
 
+    
+    public function search(Request $request){
+        $search=$request->search;
+        $categories=Category::select('category.id','category.name','category.status','category.parent_id','c2.name as parent_name')
+                            ->leftjoin('category as c2','category.parent_id','=','c2.id')
+                            ->where('category.name','like','%'.$search.'%')
+                            ->paginate(4);
+        
+       
+        return view('category.index',compact('categories'));
+
+    }
 /**
 * Store a newly created resource in storage.
 *
@@ -53,7 +65,13 @@ class CategoryController extends Controller
             'status'=>'required',
             'parent_id'=>'required'
         ]);
-        Category::create($request->all());
+        $name=strtoupper($request->name);
+        $category=new Category();
+        $category->name=$name;
+        $category->status=$request->status;
+        $category->parent_id=$request->parent_id;
+        $category->save();
+       
         return redirect()->route('category.index')->with('success','Category created successfully');
     }
 
@@ -101,7 +119,8 @@ class CategoryController extends Controller
             'name'=>'required',
             'status'=>'required'
         ]);
-        Category::find($id)->update($request->all());
+        $name=strtoupper($request->name);
+        Category::find($id)->update(['name'=>$name,'status'=>$request->status]);
         return redirect()->route('category.index')->with('success','Category updated successfully');
     }
 

@@ -20,6 +20,11 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
+use App\UserOrder;
+use App\Address;
+use Auth;
+use Hash;
+use Mail;
 class AddMoneyController extends Controller
 {
     private $_api_context;
@@ -137,7 +142,7 @@ class AddMoneyController extends Controller
             $user_email=Auth::User()->email;
             $user_id=Auth::User()->id;
             $order_id=Session::get('order_id');
-                
+            UserOrder::where('id',$order_id)->update(['shipping_method' => "paypal"]);    
             $userCart = Cart::where('user_email', $user_email)->delete();
             $email=$user_email;
             $productDetails=UserOrder::with('orders')->where('id',$order_id)->first();
