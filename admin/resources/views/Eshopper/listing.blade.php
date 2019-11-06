@@ -66,7 +66,7 @@
 											<div class="single-products">
 								        
 												<div class="productinfo text-center">
-													<img src="{{ URL::to('/') }}/products/{{ $img->image_name }}" height="100px">
+													<img src="{{ URL::to('/') }}/products/{{ $img->image_name }}" height="227px">
 			            		@endforeach
 													<h2>INR {{$products->price}}</h2>
 													<p>{{$products->name}}</p>
@@ -108,7 +108,7 @@
 											<div class="single-products">
 													
 												<div class="productinfo text-center">
-													<img src="{{ URL::to('/') }}/products/{{ $products->image }}" height="100px">
+													<img src="{{ URL::to('/') }}/products/{{ $products->image }}" height="227px">
 						
 													<h2>INR {{$products->price}}</h2>
 													<p>{{$products->name}}</p>
@@ -135,7 +135,7 @@
 							
 							@endif
 					</div>
-					
+			
 					
 					
 				</div>

@@ -133,6 +133,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category_id=Product_categories::where('category_id',$id)->first();
+        if(empty($category_id)){
+        Product_categories::where('category_id',$id)->delete();
+        Category::where('parent_id',$id)->delete();
+        Category::where('id',$id)->delete();
+        }
+        else{
         $product=Product::where('id',$category_id->product_id)->first();
         $product_attribute_assoc=Product_attributes_assoc::where('product_id',$product->id)->first();
         Product_attributes_assoc::where('product_id',$product->id)->delete();
@@ -140,6 +146,7 @@ class CategoryController extends Controller
         Product_images::where('product_id',$product->id)->delete();
         Category::where('id',$id)->delete();
         Product::where('id',$category_id->product_id)->delete();
+        }
         return redirect()->route('category.index')->with('success','Category deleted successfully');
     }
 

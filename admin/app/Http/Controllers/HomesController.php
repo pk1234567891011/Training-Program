@@ -289,23 +289,7 @@ class HomesController extends Controller
         }
         return view('Eshopper.listing', compact('productsAll','paginate', 'product', 'image', 'categories','sliders', 'category', 'categoryDetails'));
     }
-    // public function subsearch(Request $request){
-    //     $search=$request->search;
-    //     $categoryDetails = Category::where(['name' => $url])->first();
-    //     $categoryCount = Category::where(['name' => $url])->count();
-    //     if ($categoryCount == 0) {
-    //         abort(404);
-    //     }
-    //     $sliders = Banner::where('status','active')->orderby('id', 'desc')->get();
-        
-    //     $productCat = Product_categories::where(['category_id' => $categoryDetails->id])->get();
-    //     $productsAll = Product::whereIn('id', $productCat->pluck('product_id'))->orderBy('id','DESC')->paginate(4);
-    //     $category = Category::with('children')->get();
-        
-    //     $banner=Banner::where('status','like','%'.$search.'%')->paginate(2);
-    //     return view('Eshopper.listing', compact('productsAll','paginate', 'product', 'image', 'categories','sliders', 'category', 'categoryDetails'));
-
-    // }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -324,7 +308,7 @@ class HomesController extends Controller
         $product_image = Product_images::where('product_id', $productDetails->id)->first();
         return view('Eshopper.details')->with(compact('category', 'productDetails', 'product_image', 'product_attributes', 'product_attribute_value','recommended'));
     }
-    public function account()
+    public function account(Request $request)
     {   
         $user_id = Auth::user()->id;
         $add = Address::where('userId', $user_id)->get();
@@ -777,8 +761,8 @@ class HomesController extends Controller
         
     }
     public function thanks(Request $request)
-    {  Session::forget('Couponcode');
-
+    {  
+        Session::forget('Couponcode');
         $user_email=Auth::User()->email;
         $userCart = Cart::where('user_email', $user_email)->delete();
         return view("orders.thanks",compact('$user_details','$order_details','$product'));

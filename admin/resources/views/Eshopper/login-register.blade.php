@@ -49,7 +49,7 @@
 							
 							<button type="submit" class="btn btn-success">Login</button>
 							<p></p>
-							<a href="{{url('forgot-password')}}">Forgot password</a>
+							<a href="{{url('forgot-password')}}">Forgot password ?</a>
 
                             <a href="{{ url('login/facebook') }}" class="btn btn-primary fa fa-facebook-square fa-2x" style="background-color: #2887ff">   Login With Facebook</a>
 							<p></p>

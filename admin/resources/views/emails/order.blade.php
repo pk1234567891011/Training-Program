@@ -19,7 +19,7 @@
             <p id="order">Your order #</p>
             
             <div id="tb" >
-              <table id="cart_details" style="width:151%;" border="1" >
+              <table id="cart_details" style="width:100%;" border="1" >
                 <tr>
                   <th>Serial No</th>
                   <th>Product Id</th>

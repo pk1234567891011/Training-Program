@@ -82,7 +82,7 @@ class ProductController extends Controller
             'names'=>'required',
           
         ]);
-
+       
         Product::create($request->all());
         $user = auth()->user();
        
@@ -90,6 +90,8 @@ class ProductController extends Controller
         $category=new Product_categories();
         $category->product_id=$product->id;
         $category->category_id=$request->CID;
+        
+       
         $category->save();
         if ($request->hasFile('names')) {
             $image = $request->file('names');
@@ -176,13 +178,15 @@ class ProductController extends Controller
             'meta_title' => 'required',
             'meta_keywords' => 'required',
             'is_featured' => 'required',
-            'CID'=>'required',
-            'names'=>'required'
+            'CID'=>'required'
+           
         ]);
         $user = auth()->user();
         $product_images= Product_images::where('product_id',$id)->first();
         $product=Product::find($id)->first();
-
+        $category_details=Product_categories::where('product_id',$id)->first();
+        $category_details->category_id=$request->CID;
+        $category_details->save();
         if($request->hasFile('names'))
         {
            
@@ -221,6 +225,10 @@ class ProductController extends Controller
     {
         $assoc=Product_attributes_assoc::where('product_id',$id)->first();
         $value=Product_attributes::where('id',$assoc->product_attribute_id)->first();
+        $image =Product_images::where('product_id', $id)->first();
+        $file= $image->image_name;
+        $filename = public_path(). '/products/'.$file;
+        \File::delete($filename);
         Product_images::where('product_id', $id)->delete();
         Product_categories::where('product_id', $id)->delete();
         Product_attributes_assoc::where('product_id',$id)->delete();
