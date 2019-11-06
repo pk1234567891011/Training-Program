@@ -18,7 +18,7 @@
         </div>
     @endif
     <div id="div_form">
-        <form method="get" action="/search">
+        <form method="get" action="/productsearch">
             <input type="search" name="search" class="form-control" id="search"> 
             <button type="submit" id="btnSearch" class="btn btn-primary"  >Search</button>
         </form>

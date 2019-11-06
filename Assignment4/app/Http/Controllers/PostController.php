@@ -26,12 +26,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
         return view('posts.create');
     }
-    public function search(Request $request){
-        $search=$request->search;
+
+    public function search(Request $request)
+    {
         
+        $search=$request->search;
         $posts=Post::where('C_name','like','%'.$search.'%')->paginate(10);
         return view('posts.index',compact('posts'));
 

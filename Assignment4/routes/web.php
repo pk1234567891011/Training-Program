@@ -18,5 +18,5 @@ Route::delete('posts', 'PostController@deleteAll');
 Route::resource('posts','PostController');
 Route::resource('product','ProductController');
 Route::delete('product', 'ProductController@deleteAll');
-Route::get('/search','PostController@search');
-Route::get('/search','ProductController@search');
+Route::get('/postsearch','PostController@search');
+Route::get('/productsearch','ProductController@search');
